@@ -3,6 +3,7 @@
  * @author skykun
  */
 import {Form} from '../form';
+const INPUT_TEP = ''
 
 class Input extends Form {
 
@@ -10,6 +11,13 @@ class Input extends Form {
         this.super(arguments);
     }
 
+    
+    /**
+     * @override
+     */
+    getHtml() {
+
+    }
     
 
 }
