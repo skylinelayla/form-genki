@@ -2,11 +2,17 @@
 <html>
     <head></head>
     <body>
+        <div id="form-container"></div>
         <script src="./dist/FormGen.js"></script>
         <script>
             // FormGen.init();
-            var input = new FormGen.input('test');
-            input.getData();
+            var input = new FormGen.input({
+                type: 'text',
+                uuid: '11221',
+                name: 'name',
+                label: 'name'
+            });
+            console.log(input.mount());
         </script>
     </body>
 </html>

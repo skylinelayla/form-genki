@@ -3,14 +3,15 @@
  * @author skykun
  */
 import {Form} from './form';
-var mustache = require('mustache');
-const INPUT_TEP = '<input for="{{label}}" type="{{type}}" id="{{uuid}}" name="{{name}}">';
 
 export default class Input {
 
     constructor(data) {
         this.data = data;
-        // this.super(arguments);
+        this.container = document.getElementById('form-container');
+        if (!this.container) {
+            throw new Error('please check container');
+        }
     }
 
     
@@ -18,10 +19,13 @@ export default class Input {
      * @override
      */
     getHtml() {
-        return mustache.render(INPUT_TEP);
+        return `<input for="${this.data.label}" type="${this.data.type}" id="${this.data.uuid}" name="${this.data.name}">`;
     }
 
     getData() {
-        console.log(this.data);
+    }
+
+    mount() {
+        this.container.innerHTML = this.getHtml();
     }
 }

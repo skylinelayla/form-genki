@@ -10,6 +10,5 @@
   "author": "skykun",
   "license": "ISC",
   "dependencies": {
-    "mustache": "^3.1.0"
   }
 }

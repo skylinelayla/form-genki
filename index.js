@@ -1,13 +1,15 @@
 /**
  * @file index
+ * @author skykun
  */
 import Input from './core/forms/input';
+
 (function (window) {
-    let _init = () => {
-        console.log('tt');
-    };
+    // const container  = document.getElementById('form-container');
+    // if (!container) {
+    //     throw new Error('please check container is provided');
+    // }
     window.FormGen = {
-        init: _init,
         input: Input
     };
 })(window)

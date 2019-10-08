@@ -8,7 +8,6 @@
 
 #### dependency
 * bootstrap (default theme or you can cover it)
-* Mustache.js (html template)
 * webpack
 
 #### how to use
