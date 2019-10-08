@@ -3,7 +3,7 @@
  * @author skykun
  */
 
-class Form {
+export default class Form {
     constructor(data) {
         this.metaData = data;
     }
@@ -32,5 +32,3 @@ class Form {
     getHtml() {
     }
 }
-
-export default Form;

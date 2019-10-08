@@ -2,13 +2,15 @@
  * @file input file
  * @author skykun
  */
-import {Form} from '../form';
-const INPUT_TEP = ''
+import {Form} from './form';
+var mustache = require('mustache');
+const INPUT_TEP = '<input for="{{label}}" type="{{type}}" id="{{uuid}}" name="{{name}}">';
 
-class Input extends Form {
+export default class Input {
 
     constructor(data) {
-        this.super(arguments);
+        this.data = data;
+        // this.super(arguments);
     }
 
     
@@ -16,8 +18,10 @@ class Input extends Form {
      * @override
      */
     getHtml() {
-
+        return mustache.render(INPUT_TEP);
     }
-    
 
+    getData() {
+        console.log(this.data);
+    }
 }
