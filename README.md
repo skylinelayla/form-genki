@@ -5,6 +5,7 @@
 * flexible for using on every platform (angular & vue...)
 * provide form render & form data check
 * provide theme config
+* i18n
 
 #### dependency
 * bootstrap (default theme or you can cover it)
@@ -13,7 +14,8 @@
 #### how to use
 * import files into your project.
 ```javascript
-    import {Form} from 'formGen';
+    import {Form} from 'formGen'; // for es module
+    <script type="text/javascript" src="./dist/FormGen.js"></script> // for html script
 ```
 * create a div container on your page, form will be rendered in this container.
 ```html
@@ -21,7 +23,7 @@
 ```
 * instantiate a form and then render it.
 ```javascript
-    var form = new Form(data);
+    var form = new FormGen(data);
     form.render();
 ```
 * check value and get value.

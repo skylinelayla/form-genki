@@ -10,5 +10,10 @@
   "author": "skykun",
   "license": "ISC",
   "dependencies": {
+    "shortid": "^2.2.15"
+  },
+  "devDependencies": {
+    "css-loader": "^3.2.0",
+    "style-loader": "^1.0.0"
   }
 }

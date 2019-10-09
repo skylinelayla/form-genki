@@ -1,18 +1,49 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
-    <body>
-        <div id="form-container"></div>
-        <script src="./dist/FormGen.js"></script>
-        <script>
-            // FormGen.init();
-            var input = new FormGen.input({
-                type: 'text',
-                uuid: '11221',
-                name: 'name',
-                label: 'name'
-            });
-            console.log(input.mount());
-        </script>
-    </body>
+
+<head></head>
+
+<body>
+    <div id="form-container"></div>
+    <button id="test">TEST</button>
+    <script src="./dist/FormGen.js"></script>
+    <script>
+        var testBtn = document.getElementById('test');
+        testBtn.addEventListener('click', function () {
+            localStorage.setItem('LANG', 'zh-CN');
+        })
+        var input = new FormGen({
+            id: 'sss',
+            properties: [
+                {
+                    type: 'TEXT',
+                    uuid: '11221',
+                    name: 'name',
+                    label: {
+                        'zh-CN': '姓名1'
+                    },
+                    hintText: {
+                        'zh-CN': '请输入姓名'
+                    }
+                },
+                {
+                    type: 'TEXT',
+                    uuid: '11221',
+                    name: 'name1',
+                    label: {
+                        'zh-CN': '姓名2'
+                    },
+                    hintText: {
+                        'zh-CN': '请输入姓名'
+                    }
+                }
+            ]
+        });
+        input.render();
+        document.addEventListener('storageChanged', function () {
+            console.log(localStorage.getItem('LANG'));
+        });
+    </script>
+</body>
+
 </html>
