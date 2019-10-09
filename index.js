@@ -4,6 +4,4 @@
  */
 import Render from './src/render';
 
-(function (window) {
-    window.FormGen = Render;
-})(window)
+export {Render};

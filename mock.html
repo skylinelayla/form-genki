@@ -12,7 +12,8 @@
         testBtn.addEventListener('click', function () {
             localStorage.setItem('LANG', 'zh-CN');
         })
-        var input = new FormGen({
+        var Form = FormGen.Render;
+        var input = new Form({
             id: 'sss',
             properties: [
                 {

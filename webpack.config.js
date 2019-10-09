@@ -8,7 +8,13 @@ module.exports = {
     devtool: 'source-map',
     output: {
         filename: fileName,
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        library: libraryName,
+        globalObject: 'this',
+        libraryTarget: 'umd'
+    },
+    externals: {
+      'bootstrap': true
     },
     module: {
         rules: [
@@ -24,8 +30,7 @@ module.exports = {
           },
           {
             test: /\.css$/i,
-            loader: ['style-loader', 'css-loader'],
-            exclude: /node_modules/
+            loader: ['style-loader', 'css-loader']
           }
         ]
     },

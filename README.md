@@ -23,7 +23,10 @@
 ```
 * instantiate a form and then render it.
 ```javascript
-    var form = new FormGen(data);
+    var Form = FormGen.Render;
+    var form = new Form({
+        ...data
+    })
     form.render();
 ```
 * check value and get value.
