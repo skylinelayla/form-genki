@@ -1,4 +1,5 @@
-### form-generate for bpezcloud system
+### form-genki
+🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま]
 
 #### form generate provide these features
 * unified data format for form definition
@@ -12,10 +13,14 @@
 * webpack
 
 #### how to use
+* npm install
+```javascript
+    npm i form-genki --save
+```
 * import files into your project.
 ```javascript
-    import {Form} from 'formGen'; // for es module
-    <script type="text/javascript" src="./dist/FormGen.js"></script> // for html script
+    import FormGen from 'form-genki'; // for es module
+    <script type="text/javascript" src="node_modules/form-genki/dist/FormGen.js"></script> // for html script
 ```
 * create a div container on your page, form will be rendered in this container.
 ```html

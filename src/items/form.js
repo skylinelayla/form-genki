@@ -36,7 +36,7 @@ class Form {
     setWrapper() {
         let $wrapperContainer = document.createElement('div');
         $wrapperContainer.setAttribute('class', 'form-group');
-        $wrapperContainer.setAttribute('id', this.uuid);
+        $wrapperContainer.setAttribute('id', generateID());
         return $wrapperContainer;
     }
 }

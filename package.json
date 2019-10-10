@@ -1,5 +1,5 @@
 {
-  "name": "bpezcloud-form",
+  "name": "form-genki",
   "version": "1.0.0",
   "description": "A Form Generator",
   "main": "dist/FormGen.js",
