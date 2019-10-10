@@ -56,10 +56,12 @@
                 "defaultValueFrom": null,
                 "type": "TEXT", // form item type
                 "blockId": "0", // blockId ?
-                "columnSize": 6, // span
-                "label": {
+                "columnSize": 6, // span,
+                "styleClass": "form-control", // form item class, default is form-control
+                "labelText": {
                     "zh-CN": "请输入" // label
                 },
+                "labelRawHtml": "", // maybe you want insert RawHtml into label
                 "hintText": {
                     "zh-CN": "提示信息" // hint
                 },

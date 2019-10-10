@@ -11,7 +11,7 @@ function getLocaleStorage(locale) {
 }
 
 function addStorageListener(handle) {
-    document.addEventListener('storage', (evt) => {
+    document.addEventListener('storageChanged', () => {
         handle();
     });
 }
@@ -20,9 +20,9 @@ function resetLocalStorageEvent() {
     var originSetItem = localStorage.setItem;
     localStorage.setItem = function (key, value) {
         // custom storage event
+        originSetItem.apply(this, arguments);
         var event = new Event('storageChanged');
         document.dispatchEvent(event);
-        originSetItem.apply(this, arguments);
     };
 }
 

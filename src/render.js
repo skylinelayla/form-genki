@@ -7,43 +7,73 @@ import Select from './items/select';
 import Button from './items/button';
 import './css/main.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import {addStorageListener, getLocaleStorage} from './utils/setLocale';
+import {addStorageListener, getLocaleStorage, resetLocalStorageEvent} from './utils/setLocale';
+import {generateID} from './utils/genUUID';
+import {createElement} from './utils/dom';
 
 class Render {
     constructor(data) {
+        resetLocalStorageEvent();
         this.data = data;
         this.locale = getLocaleStorage();
+        this.itemInstance = [];
         this.$container = null;
+        this.resultValue = {};
+        this.formId = generateID();
         var me = this;
         // reset locale while local storage changed
         addStorageListener(function () {
             me.locale = getLocaleStorage();
             me.refresh();
         });
+
+        this.$formWrapper = this.getFormWrapper();
     }
 
     render() {
-        this.mount();
-    }
-
-    mount() {
         this.$container = document.getElementById('form-container');
         if (!this.$container) {
             throw new Error('please check form container is provided');
         }
-        this.$container.innerHTML = this.getRawHtml(this.data);
+        this.mount();
+    }
+
+    mount() {
+        this.$formWrapper.innerHTML = this.getRawHtml(this.data);
+        this.$container.innerHTML = this.$formWrapper.outerHTML;
+    }
+
+    getFormData() {
+        this.itemInstance.forEach(e => {
+            this.resultValue[e.getName()] = e.getValue();
+        });
+        return this.resultValue;
+    }
+
+    validateForm() {
+        document.getElementById(this.formId).classList.add('was-validated');
+    }
+
+    destroy() {
+        this.$container.innerHTML = '';
     }
 
     refresh() {
         if (!this.$container) {
             return;
         }
-        this.$container.innerHTML = this.getRawHtml(this.data);
+        this.destroy();
+        this.mount();
+    }
+
+    getFormWrapper() {
+        return createElement('form', {class: 'form-genki-block', id: this.formId});
     }
 
     getRawHtml(data) {
         let item = null;
         let htmlRaw = '';
+        this.itemInstance = [];
         data.properties.forEach(property => {
             let param = {
                 ...property,
@@ -61,6 +91,7 @@ class Render {
                     break;
             }
             htmlRaw += item.getHtml();
+            this.itemInstance.push(item);
         });
         return htmlRaw;
     }

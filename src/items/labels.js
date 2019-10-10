@@ -2,15 +2,19 @@
  * @file label
  * @author skykun
  */
-
-class Label {
+import Form from './form';
+class Label extends Form {
     constructor(data) {
-        this.name = data.name;
-        this.text = data.label['zh-CN'];
+        super(data);
     }
 
     getHtml() {
-        return `<label for="${this.name}">${this.text}</label> `;
+        if (this.metaData.labelText && this.setLocaleText(this.metaData.labelText)) {
+            return `<label
+            for="${this.metaData.name}"
+            id="${this.uuid}" 
+            class="form-genki-label">${this.setLocaleText(this.metaData.labelText) || ''}${this.metaData.labelHtml || ''}</label> `;
+        }
     }
 }
 

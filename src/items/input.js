@@ -14,31 +14,34 @@ export default class Input extends Form {
      * @override
      */
     getHtml() {
-        let labelRaw = '';
-        if (this.metaData.label && this.metaData.label['zh-CN']) {
-            labelRaw = new Label(this.metaData);
-        }
-        let inputStr = `${labelRaw && labelRaw.getHtml()}<input for="${this.metaData.name}" type="${this.metaData.type}" 
-            id="${this.uuid}"
-            name="${this.metaData.name}"
-            placeholder="${this.metaData.hintText['zh-CN']}">`;
+        let labelRaw = new Label(this.metaData);
         let $wrapperContainer = this.setWrapper();
-        $wrapperContainer.innerHTML = inputStr;
+        $wrapperContainer.innerHTML = `${labelRaw.getHtml()} ${this.handleTpl()}`;
         return $wrapperContainer.outerHTML;
     }
 
-    getData() {
-    }
-    /**
-     * @override
-     */
-    setStyle() {
-        
+
+    getValue() {
+        let value = document.getElementById(this.uuid).value;
+        return value;
     }
 
-    /**
-     * set text
-     */
-    setTxt() {
+    setStyle() {
+        return (this.metaData.styleClass || 'form-control') + ` col-${this.metaData.columnSize || 12}`;
+    }
+
+    handleTpl() {
+        return `<input type="${this.metaData.type.toLowerCase()}" 
+        id="${this.uuid}"
+        name="${this.metaData.name}"
+        class="form-genki-input ${this.setStyle()}"
+        ${this.metaData.required ? 'required' : ''}
+        placeholder="${this.setLocaleText(this.metaData.hintText)}">`;
+    }
+
+    checkValue() {
+        if (this.metaData && !this.getValue()) {
+            document.getElementById(this.uuid).setAttribute('class', 'was-validated');
+        }
     }
 }

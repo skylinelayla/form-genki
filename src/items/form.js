@@ -3,6 +3,7 @@
  * @author skykun
  */
 import {generateID} from '../utils/genUUID';
+import {createElement} from '../utils/dom';
 
 class Form {
     constructor(data) {
@@ -12,32 +13,32 @@ class Form {
     }
 
     /** value validation */
-    checkValue() {
+    checkValue() {}
+
+    /** get item name */
+    getName() {
+        return this.metaData.name;
     }
 
     /** get form value */
-    getValue() {
-
-    }
+    getValue() {}
 
     /** set defaultValue for form */
-    setValue() {
-    }
+    setValue() {}
 
     /** get form html */
-    getHtml() {
-    }
+    getHtml() {}
 
     /** set style */
-    setStyle() {
+    setStyle() {}
+
+    setLocaleText(data) {
+        return data[this.locale] || false;
     }
 
     /** set item wrapper dom */
     setWrapper() {
-        let $wrapperContainer = document.createElement('div');
-        $wrapperContainer.setAttribute('class', 'form-group');
-        $wrapperContainer.setAttribute('id', generateID());
-        return $wrapperContainer;
+        return createElement('div', {class: 'form-group', id: generateID()})
     }
 }
 
