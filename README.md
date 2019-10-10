@@ -1,6 +1,7 @@
 ### form-genki
-🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま]
+🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま]  
 
+⚠️⚠️ Update: 2019-10-10 this library only support input form render, other form type will be soon added.
 #### form generate provide these features
 * unified data format for form definition
 * flexible for using on every platform (angular & vue...)
