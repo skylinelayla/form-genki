@@ -6,7 +6,6 @@ import Input from './items/input';
 import Select from './items/select';
 import Button from './items/button';
 import './css/main.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import {addStorageListener, getLocaleStorage, resetLocalStorageEvent} from './utils/setLocale';
 import {generateID} from './utils/genUUID';
 import {createElement} from './utils/dom';

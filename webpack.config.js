@@ -14,7 +14,7 @@ module.exports = {
         libraryTarget: 'umd'
     },
     externals: {
-      'bootstrap': true
+      'bootstrap': 'bootstrap'
     },
     module: {
         rules: [
