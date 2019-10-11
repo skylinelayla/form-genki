@@ -21,11 +21,9 @@
     npm i form-genki --save
 ```
 * import files into your project.   
-    for es module
 ```javascript
     import * as FormGen from 'form-genki'
 ```
-    for script tag
 ```html
     <script type="text/javascript" src="node_modules/form-genki/dist/FormGen.js"></script>
 ```
