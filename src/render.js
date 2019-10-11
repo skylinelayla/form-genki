@@ -19,6 +19,7 @@ class Render {
         this.$container = null;
         this.resultValue = {};
         this.formId = generateID();
+        this.containerId = data.containerId || 'form-container';
         var me = this;
         // reset locale while local storage changed
         addStorageListener(function () {
@@ -26,11 +27,12 @@ class Render {
             me.refresh();
         });
 
+
         this.$formWrapper = this.getFormWrapper();
     }
 
     render() {
-        this.$container = document.getElementById('form-container');
+        this.$container = document.getElementById(this.containerId);
         if (!this.$container) {
             throw new Error('please check form container is provided');
         }
