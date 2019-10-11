@@ -1,7 +1,9 @@
 ### form-genki
 🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま]  
 
-⚠️⚠️ Update: 2019-10-10 this library only support input form render, other form type will be soon added.
+⚠️⚠️ Update: 2019-10-10 this library only support input form render, other form type will be soon added.  
+⚠️⚠️ Update: 2019-10-11 support multi form container in one page.
+
 #### form generate provide these features
 * unified data format for form definition
 * flexible for using on every platform (angular & vue...)
@@ -18,12 +20,16 @@
 ```javascript
     npm i form-genki --save
 ```
-* import files into your project.
+* import files into your project.   
+    for es module
 ```javascript
-    import FormGen from 'form-genki'; // for es module
-    <script type="text/javascript" src="node_modules/form-genki/dist/FormGen.js"></script> // for html script
+    import * as FormGen from 'form-genki'
 ```
-* create a div container on your page, form will be rendered in this container.
+    for script tag
+```html
+    <script type="text/javascript" src="node_modules/form-genki/dist/FormGen.js"></script>
+```
+* create a div container on your page, form will be rendered in this container, or you can set custom div id attribute to render
 ```html
     <div id="form-container"></div>
 ```
@@ -31,16 +37,15 @@
 ```javascript
     var Form = FormGen.Render;
     var form = new Form({
-        ...data
+        ...data,
+        containerId: 'form-container-x' // if you has one more form container
     })
     form.render();
 ```
-* check value and get value.
+* check value and get value, validate result will be shown by bootstrap hint style.
 ```javascript
-    form.checkValue(function (data) {
-        console.log(data);
-    });
-    var result = form.getValue();
+    form.validateForm();
+    var result = form.getFormData();
 ```
 * theme set: you can cover class name to use your own css.
 
@@ -109,3 +114,15 @@
     }
 ]
 ```
+
+#### i18n
+Support placeholder & label text i18n, just provide i18n
+info like this:
+
+``` json
+    "labelText": {
+        "zh-CN": "姓名",
+        "en-US": "name"
+    }
+```
+The host locale will be find in localStorage of browser. The default locale is 'zh-CN', render will monitoring storage. when you use localStorage.setItem('LANG', 'en-US'), it will trigger render to refresh form to fit new locale.
