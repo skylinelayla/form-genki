@@ -5,6 +5,7 @@
 
 import Input from './Input';
 import {generateID} from '../utils/genUUID';
+import Label from './labels';
 
 export default class Radio extends Input {
     constructor(data) {
@@ -12,9 +13,14 @@ export default class Radio extends Input {
     }
 
     handleItemTpl(data) {
-        return `<input
+        let id = generateID();
+        let labelRaw = new Label({
+            labelText: data.text,
+            name: id
+        });
+        return `${labelRaw.getHtml()} <input
             type="radio" value="${this.setLocaleText(data.text)}" name="${this.metaData.name}"
-            id="${generateID()}" class="form-genki-input ${this.setStyle()}"
+            id="${id}" class="form-genki-input radio-item ${this.setStyle()}"
             ${data.value ? 'checked' : ''}>`;
     }
 
@@ -32,9 +38,9 @@ export default class Radio extends Input {
      * @override
      */
     getValue() {
-        let $radioContainer = document.getElementById(this.uuid);
+        let $radioItems = document.getElementsByClassName('radio-item');
         let res = '';
-        $radioContainer.children.forEach(e => {
+        $radioItems.forEach(e => {
             if (e.checked) {
                 res = e.value;
             }
