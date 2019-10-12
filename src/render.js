@@ -5,7 +5,8 @@
 import Input from './items/input';
 import Select from './items/select';
 import Button from './items/button';
-import './css/main.css';
+import Radio from './items/radio';
+
 import {addStorageListener, getLocaleStorage, resetLocalStorageEvent} from './utils/setLocale';
 import {generateID} from './utils/genUUID';
 import {createElement} from './utils/dom';
@@ -26,8 +27,6 @@ class Render {
             me.locale = getLocaleStorage();
             me.refresh();
         });
-
-
         this.$formWrapper = this.getFormWrapper();
     }
 
@@ -49,6 +48,14 @@ class Render {
             this.resultValue[e.getName()] = e.getValue();
         });
         return this.resultValue;
+    }
+
+    setFormValue(data) {
+        this.itemInstance.forEach((e, idx) => {
+            if (data && data[idx]) {
+                e.setValue(data[idx].defaultValue || '');
+            }
+        });
     }
 
     validateForm() {
@@ -89,6 +96,12 @@ class Render {
                     break;
                 case 'BUTTON':
                     item = new Button(param);
+                    break;
+                case 'RADIO':
+                    item = new Radio(param);
+                    break;
+                default: 
+                    item = new Input(param);
                     break;
             }
             htmlRaw += item.getHtml();

@@ -51,32 +51,32 @@
 ```json
     [
     {
-        "id": "abcdefg", // id
+        "id": "abcdefg",
         "properties": [
             {
-                "name": "DummyText", // form item name
-                "variable": "variable", // data binding for form item
-                "defaultValue": null, // default value
+                "name": "DummyText",
+                "variable": "variable",
+                "defaultValue": null,
                 "defaultValueFrom": null,
-                "type": "TEXT", // form item type
-                "blockId": "0", // blockId ?
-                "columnSize": 6, // span,
-                "styleClass": "form-control", // form item class, default is form-control
+                "type": "TEXT",
+                "blockId": "0",
+                "columnSize": 6,
+                "styleClass": "form-control",
                 "labelText": {
-                    "zh-CN": "请输入" // label
+                    "zh-CN": "请输入"
                 },
-                "labelRawHtml": "", // maybe you want insert RawHtml into label
+                "labelRawHtml": "",
                 "hintText": {
-                    "zh-CN": "提示信息" // hint
+                    "zh-CN": "提示信息"
                 },
                 "items": [],
                 "callApi": null,
                 "required": true,
                 "visible": true,
-                "readonly": false // if readonly
+                "readonly": false
             }
         ],
-        "tables": [] // 表格定义
+        "tables": []
     },
     {
         "id": "abcd",
@@ -86,7 +86,7 @@
                 "variable": "variable",
                 "defaultValue": null,
                 "defaultValueFrom": null,
-                "type": "V_COMBO",
+                "type": "RADIO",
                 "blockId": "1",
                 "columnSize": 12,
                 "label": {
@@ -100,6 +100,13 @@
                             "zh-CN": "选择1"
                         },
                         "value": 1
+                    },
+                    {
+                        "text": {
+                            "en-US": "Choice1",
+                            "zh-CN": "选择1"
+                        },
+                        "value": 0
                     }
                 ],
                 "callApi": null,
