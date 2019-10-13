@@ -10,17 +10,20 @@ import Label from './labels';
 export default class Radio extends Input {
     constructor(data) {
         super(data);
+        this.radioId = generateID();
     }
 
     handleItemTpl(data) {
+        // restructure data for radio button form
         let id = generateID();
         let labelRaw = new Label({
             labelText: data.text,
-            name: id
+            name: id,
+            localeKey: this.metaData.localeKey
         });
         return `${labelRaw.getHtml()} <input
             type="radio" value="${this.setLocaleText(data.text)}" name="${this.metaData.name}"
-            id="${id}" class="form-genki-input radio-item ${this.setStyle()}"
+            id="${id}" class="form-genki-input radio-item-${this.radioId} ${this.setStyle()}"
             ${data.value ? 'checked' : ''}>`;
     }
 
@@ -38,13 +41,15 @@ export default class Radio extends Input {
      * @override
      */
     getValue() {
-        let $radioItems = document.getElementsByClassName('radio-item');
+        let $radioItems = document.getElementsByClassName(`radio-item-${this.radioId}`);
         let res = '';
-        $radioItems.forEach(e => {
-            if (e.checked) {
-                res = e.value;
+        [].forEach.call($radioItems, el => {
+            if (el.checked) {
+                res = el.value;
             }
         });
         return res;
     }
+
+
 }

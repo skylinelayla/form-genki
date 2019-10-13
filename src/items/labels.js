@@ -15,6 +15,9 @@ class Label extends Form {
             id="${this.uuid}" 
             class="form-genki-label">${this.setLocaleText(this.metaData.labelText) || ''}${this.metaData.labelHtml || ''}</label> `;
         }
+        else {
+            return '';
+        }
     }
 }
 
