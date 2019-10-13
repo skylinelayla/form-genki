@@ -1,8 +1,8 @@
 ### form-genki
 🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま]  
 
-⚠️⚠️ Update: 2019-10-13 support checkbox/radio input type.
-⚠️⚠️ Update: 2019-10-11 support multi form container in one page.
+⚠️⚠️ Update: 2019-10-13 support checkbox/radio input type.  
+⚠️⚠️ Update: 2019-10-11 support multi form container in one page.  
 ⚠️⚠️ Update: 2019-10-10 this library only support input form render, other form type will be soon added.  
 
 
