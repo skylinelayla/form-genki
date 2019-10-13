@@ -1,8 +1,10 @@
 ### form-genki
 🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま]  
 
-⚠️⚠️ Update: 2019-10-10 this library only support input form render, other form type will be soon added.  
+⚠️⚠️ Update: 2019-10-13 support checkbox/radio input type.
 ⚠️⚠️ Update: 2019-10-11 support multi form container in one page.
+⚠️⚠️ Update: 2019-10-10 this library only support input form render, other form type will be soon added.  
+
 
 #### form generate provide these features
 * unified data format for form definition
@@ -51,32 +53,32 @@
 ```json
     [
     {
-        "id": "abcdefg", // id
+        "id": "abcdefg",
         "properties": [
             {
-                "name": "DummyText", // form item name
-                "variable": "variable", // data binding for form item
-                "defaultValue": null, // default value
+                "name": "DummyText",
+                "variable": "variable",
+                "defaultValue": null,
                 "defaultValueFrom": null,
-                "type": "TEXT", // form item type
-                "blockId": "0", // blockId ?
-                "columnSize": 6, // span,
-                "styleClass": "form-control", // form item class, default is form-control
+                "type": "TEXT",
+                "blockId": "0",
+                "columnSize": 6,
+                "styleClass": "form-control",
                 "labelText": {
-                    "zh-CN": "请输入" // label
+                    "zh-CN": "请输入"
                 },
-                "labelRawHtml": "", // maybe you want insert RawHtml into label
+                "labelRawHtml": "",
                 "hintText": {
-                    "zh-CN": "提示信息" // hint
+                    "zh-CN": "提示信息"
                 },
                 "items": [],
                 "callApi": null,
                 "required": true,
                 "visible": true,
-                "readonly": false // if readonly
+                "readonly": false
             }
         ],
-        "tables": [] // 表格定义
+        "tables": []
     },
     {
         "id": "abcd",
@@ -86,10 +88,10 @@
                 "variable": "variable",
                 "defaultValue": null,
                 "defaultValueFrom": null,
-                "type": "V_COMBO",
+                "type": "RADIO",
                 "blockId": "1",
                 "columnSize": 12,
-                "label": {
+                "labelText": {
                     "zh-CN": "请选择"
                 },
                 "hintText": {},
@@ -100,6 +102,13 @@
                             "zh-CN": "选择1"
                         },
                         "value": 1
+                    },
+                    {
+                        "text": {
+                            "en-US": "Choice1",
+                            "zh-CN": "选择1"
+                        },
+                        "value": 0
                     }
                 ],
                 "callApi": null,
