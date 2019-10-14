@@ -50,11 +50,21 @@ class Render {
         return this.resultValue;
     }
 
+    /**
+     * set form data by data
+     * @param {object} data {key: value} 
+     */
     setFormValue(data) {
+        if (typeof data !== 'object') {
+            throw new Error('set form data must be object');
+        }
+        // stupid need to improve
         this.itemInstance.forEach((e, idx) => {
-            if (data && data[idx]) {
-                e.setValue(data[idx].defaultValue || '');
-            }
+            Object.keys(data).map(key => {
+                if (key === e.getName()) {
+                    e.setValue(data[key]);
+                }
+            });
         });
     }
 
