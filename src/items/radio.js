@@ -3,7 +3,7 @@
  * @author skykun
  */
 
-import Input from './Input';
+import Input from './input';
 import {generateID} from '../utils/genUUID';
 import Label from './labels';
 
@@ -49,6 +49,14 @@ export default class Radio extends Input {
             }
         });
         return res;
+    }
+
+    /**
+     * @override
+     */
+    setValue(data) {
+        if (this.metaData.ty)
+
     }
 
 

@@ -76,6 +76,44 @@
                 "required": true,
                 "visible": true,
                 "readonly": false
+            },
+            {
+                "name": "DummyText2",
+                "variable": "variable2",
+                "defaultValue": null,
+                "defaultValueFrom": null,
+                "type": "SELECT",
+                "blockId": "0",
+                "columnSize": 6,
+                "styleClass": "form-control",
+                "labelText": {
+                    "zh-CN": "请选择",
+                    "en-US": "please choose"
+                },
+                "labelRawHtml": "",
+                "hintText": {
+                    "zh-CN": "提示信息"
+                },
+                "items": [
+                    {
+                        "text": {
+                            "zh-CN": "选择1",
+                            "en-US": "choose1"
+                        },
+                        "value": 1
+                    },
+                    {
+                        "text": {
+                            "zh-CN": "选择2",
+                            "en-US": "choose2"
+                        },
+                        "value": 2
+                    }
+                ],
+                "callApi": null,
+                "required": true,
+                "visible": true,
+                "readonly": false
             }
         ],
         "tables": []
