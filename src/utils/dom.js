@@ -16,4 +16,10 @@ function createElement(tag, attr) {
     return $dom;
 }
 
-export {createElement}
+function forEachElement(htmlList, cb) {
+    [].forEach.call(htmlList, el => {
+        cb(el);
+    });
+}
+
+export {createElement, forEachElement};

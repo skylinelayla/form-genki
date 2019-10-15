@@ -3,14 +3,16 @@
  * @author skykun
  */
 
-import Input from './Input';
+import Input from './input';
 import {generateID} from '../utils/genUUID';
 import Label from './labels';
+import {forEachElement} from '../utils/dom';
 
 export default class Radio extends Input {
     constructor(data) {
         super(data);
         this.radioId = generateID();
+        this.defaultValue = this.metaData.defaultValue;
     }
 
     handleItemTpl(data) {
@@ -22,16 +24,16 @@ export default class Radio extends Input {
             localeKey: this.metaData.localeKey
         });
         return `${labelRaw.getHtml()} <input
-            type="radio" value="${this.setLocaleText(data.text)}" name="${this.metaData.name}"
+            type="radio" value="${data.value}" name="${this.metaData.name}"
             id="${id}" class="form-genki-input radio-item-${this.radioId} ${this.setStyle()}"
-            ${data.value ? 'checked' : ''}>`;
+            ${data.value === this.defaultValue ? 'checked' : ''}>`;
     }
 
     /**
      * @override
      */
     handleTpl() {
-        return this.metaData.items.reduce((res, item) => {
+        return this.metaData.items.reduce((res, item, idx) => {
             res += this.handleItemTpl(item);
             return res;
         }, '');
@@ -41,9 +43,8 @@ export default class Radio extends Input {
      * @override
      */
     getValue() {
-        let $radioItems = document.getElementsByClassName(`radio-item-${this.radioId}`);
         let res = '';
-        [].forEach.call($radioItems, el => {
+        forEachElement(this.findItemCollection(), el => {
             if (el.checked) {
                 res = el.value;
             }
@@ -51,5 +52,16 @@ export default class Radio extends Input {
         return res;
     }
 
+    /**
+     * @override
+     */
+    setValue(value) {
+        forEachElement(this.findItemCollection(), el => {
+            el.checked = (el.value == value);
+        });
+    }
 
+    findItemCollection() {
+        return document.getElementsByClassName(`radio-item-${this.radioId}`);
+    }
 }

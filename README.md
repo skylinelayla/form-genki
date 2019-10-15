@@ -1,6 +1,7 @@
 ### form-genki
-🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま]  
+🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま] 
 
+⚠️⚠️ Update: 2019-10-15 support select type & support set FormData.
 ⚠️⚠️ Update: 2019-10-13 support checkbox/radio input type.  
 ⚠️⚠️ Update: 2019-10-11 support multi form container in one page.  
 ⚠️⚠️ Update: 2019-10-10 this library only support input form render, other form type will be soon added.  
@@ -47,6 +48,13 @@
     form.validateForm();
     var result = form.getFormData();
 ```
+* set form data.
+```javascript
+    form.setFormData({
+        name1: 'value1',
+        name2: 'value2'
+    });
+```
 * theme set: you can cover class name to use your own css.
 
 #### data structure
@@ -72,6 +80,44 @@
                     "zh-CN": "提示信息"
                 },
                 "items": [],
+                "callApi": null,
+                "required": true,
+                "visible": true,
+                "readonly": false
+            },
+            {
+                "name": "DummyText2",
+                "variable": "variable2",
+                "defaultValue": null,
+                "defaultValueFrom": null,
+                "type": "SELECT",
+                "blockId": "0",
+                "columnSize": 6,
+                "styleClass": "form-control",
+                "labelText": {
+                    "zh-CN": "请选择",
+                    "en-US": "please choose"
+                },
+                "labelRawHtml": "",
+                "hintText": {
+                    "zh-CN": "提示信息"
+                },
+                "items": [
+                    {
+                        "text": {
+                            "zh-CN": "选择1",
+                            "en-US": "choose1"
+                        },
+                        "value": 1
+                    },
+                    {
+                        "text": {
+                            "zh-CN": "选择2",
+                            "en-US": "choose2"
+                        },
+                        "value": 2
+                    }
+                ],
                 "callApi": null,
                 "required": true,
                 "visible": true,
