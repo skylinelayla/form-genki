@@ -11,8 +11,8 @@ export default class Select extends Input {
         this.defaultValue = this.metaData.defaultValue;
     }
 
-    handleItemTpl(data, idx) {
-        return `<option value="${data.value}" ${idx === this.defaultValue ? 'selected': ''}>${this.setLocaleText(data.text)}</option>`;
+    handleItemTpl(data) {
+        return `<option value="${data.value}" ${data.value === this.defaultValue ? 'selected': ''}>${this.setLocaleText(data.text)}</option>`;
     }
 
     /**
@@ -22,8 +22,8 @@ export default class Select extends Input {
         if (!this.metaData.items.length) {
             throw new Error('please check select element items');
         }
-        let selectItems = this.metaData.items.reduce((res, item, idx) => {
-            res += this.handleItemTpl(item, idx);
+        let selectItems = this.metaData.items.reduce((res, item) => {
+            res += this.handleItemTpl(item);
             return res;
         }, '');
         // wrap select container
@@ -42,16 +42,5 @@ export default class Select extends Input {
             }
         });
         return res;
-    }
-
-    /**
-     * @override
-     */
-    setValue(idx) {
-        // loop items and set idx to value = 1;
-        let $radioItems = document.getElementById(this.uuid);
-        [].forEach.call($radioItems.children, (el, index) => {
-            el.setAttribute('selected', idx === index);
-        });
     }
 }

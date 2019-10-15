@@ -1,6 +1,6 @@
 {
   "name": "form-genki",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A Form Generator",
   "main": "dist/FormGen.js",
   "scripts": {

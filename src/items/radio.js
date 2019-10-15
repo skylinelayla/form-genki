@@ -12,10 +12,10 @@ export default class Radio extends Input {
     constructor(data) {
         super(data);
         this.radioId = generateID();
-        this.defaultValue = this.metaData.defaultValue || 0;
+        this.defaultValue = this.metaData.defaultValue;
     }
 
-    handleItemTpl(data, idx) {
+    handleItemTpl(data) {
         // restructure data for radio button form
         let id = generateID();
         let labelRaw = new Label({
@@ -26,7 +26,7 @@ export default class Radio extends Input {
         return `${labelRaw.getHtml()} <input
             type="radio" value="${data.value}" name="${this.metaData.name}"
             id="${id}" class="form-genki-input radio-item-${this.radioId} ${this.setStyle()}"
-            ${idx === this.defaultValue ? 'checked' : ''}>`;
+            ${data.value === this.defaultValue ? 'checked' : ''}>`;
     }
 
     /**
@@ -34,7 +34,7 @@ export default class Radio extends Input {
      */
     handleTpl() {
         return this.metaData.items.reduce((res, item, idx) => {
-            res += this.handleItemTpl(item, idx);
+            res += this.handleItemTpl(item);
             return res;
         }, '');
     }
@@ -43,9 +43,8 @@ export default class Radio extends Input {
      * @override
      */
     getValue() {
-        let $radioItems = document.getElementsByClassName(`radio-item-${this.radioId}`);
         let res = '';
-        forEachElement($radioItems, el => {
+        forEachElement(this.findItemCollection(), el => {
             if (el.checked) {
                 res = el.value;
             }
@@ -56,10 +55,13 @@ export default class Radio extends Input {
     /**
      * @override
      */
-    setValue() {
-        
-
+    setValue(value) {
+        forEachElement(this.findItemCollection(), el => {
+            el.checked = (el.value == value);
+        });
     }
 
-
+    findItemCollection() {
+        return document.getElementsByClassName(`radio-item-${this.radioId}`);
+    }
 }

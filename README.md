@@ -1,6 +1,7 @@
 ### form-genki
-🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま]  
+🐲 A form generator based on a json data [genki-dama: 元げん気き玉だま] 
 
+⚠️⚠️ Update: 2019-10-15 support select type & support set FormData.
 ⚠️⚠️ Update: 2019-10-13 support checkbox/radio input type.  
 ⚠️⚠️ Update: 2019-10-11 support multi form container in one page.  
 ⚠️⚠️ Update: 2019-10-10 this library only support input form render, other form type will be soon added.  
@@ -46,6 +47,13 @@
 ```javascript
     form.validateForm();
     var result = form.getFormData();
+```
+* set form data.
+```javascript
+    form.setFormData({
+        name1: 'value1',
+        name2: 'value2'
+    });
 ```
 * theme set: you can cover class name to use your own css.
 
