@@ -1,6 +1,6 @@
 {
   "name": "form-genki",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A Form Generator",
   "main": "dist/FormGen.js",
   "scripts": {
@@ -12,6 +12,12 @@
   "dependencies": {
     "shortid": "^2.2.15"
   },
+  "keywords": [
+    "form",
+    "json",
+    "generate",
+    "input"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/skylinelayla/form-genki.git"
