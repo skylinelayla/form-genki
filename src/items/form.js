@@ -40,6 +40,15 @@ class Form {
     setWrapper() {
         return createElement('div', {class: 'form-group', id: generateID()})
     }
+
+    /**
+     * bind plugin to form item
+     */
+    bindPlugin() {
+
+    }
+
+
 }
 
 export default Form;

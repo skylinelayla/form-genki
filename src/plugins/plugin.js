@@ -5,9 +5,6 @@
 
 export default class Plugin {
     constructor(data) {
-        this.type = data;
-        this.el = null;
-        this.evt = null;
     }
 
     /**
@@ -26,7 +23,7 @@ export default class Plugin {
         var me = this;
 
         this.el.addEventListener(this.evt, function () {
-            typeof cb === 'function' ? cb() : me.dispatch();
+            (cb && typeof cb === 'function') ? cb() : me.dispatch();
         });
     }
 

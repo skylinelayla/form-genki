@@ -16,7 +16,9 @@
     "form",
     "json",
     "generate",
-    "input"
+    "input",
+    "i18n",
+    "datepicker"
   ],
   "repository": {
     "type": "git",

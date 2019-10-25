@@ -36,12 +36,25 @@ class Render {
             throw new Error('please check form container is provided');
         }
         this.mount();
+        this.setPlugin();
     }
 
     mount() {
         this.$formWrapper.innerHTML = this.getRawHtml(this.data);
         this.$container.innerHTML = this.$formWrapper.outerHTML;
     }
+
+    /**
+     * bind plugin if type support
+     */
+    setPlugin() {
+        this.itemInstance.forEach(e => {
+            if (e.type === 'date') {
+                e.bindPlugin();
+            }
+        });
+    }
+
 
     getFormData() {
         this.itemInstance.forEach(e => {
@@ -98,7 +111,7 @@ class Render {
                 localeKey: this.locale
             };
             switch(property.type) {
-                case 'TEXT':
+                case ('TEXT' || 'DATE'):
                     item = new Input(param);
                     break;
                 case 'SELECT':

@@ -4,6 +4,7 @@
  */
 import Form from './form';
 import Label from './labels';
+import DatePickerPlugin from '../plugins/datePicker'; 
 
 export default class Input extends Form {
     constructor(data) {
@@ -66,4 +67,16 @@ export default class Input extends Form {
             document.getElementById(this.uuid).setAttribute('class', 'was-validated');
         }
     }
+
+    /**
+     * @override
+     */
+    bindPlugin() {
+        console.log('bind');
+        let datePlugin = new DatePickerPlugin();
+        let el = document.getElementById(this.uuid);
+        datePlugin.install(el, 'click');
+    }
+
+
 }
