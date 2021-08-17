@@ -4,9 +4,20 @@
  */
 import {generateID} from '../utils/genUUID';
 import {createElement} from '../utils/dom';
+import { FormSchema, FormSchemaProperty, TYPE } from '../types';
 
-class Form {
-    constructor(data) {
+export type FormType = FormSchemaProperty & {
+    localeKey?: string;
+};
+
+abstract class Form<T> {
+    protected uuid: string;
+    private locale: string;
+    protected metaData: FormSchemaProperty;
+    type: string;
+    defaultValue: T;
+
+    constructor(data: FormType) {
         this.uuid = generateID();
         this.metaData = data;
         this.locale = data.localeKey;
@@ -21,18 +32,18 @@ class Form {
     }
 
     /** get form value */
-    getValue() {}
+    getValue() {};
 
     /** set defaultValue for form */
-    setValue() {}
+    setValue(value: T) {};
 
     /** get form html */
-    getHtml() {}
+    abstract getHtml(): string;
 
     /** set style */
     setStyle() {}
 
-    setLocaleText(data) {
+    setLocaleText(data: any) {
         return data[this.locale] || false;
     }
 

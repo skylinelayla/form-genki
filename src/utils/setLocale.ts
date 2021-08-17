@@ -3,14 +3,14 @@
  * @author skykun
  */
 
-function getLocaleStorage(locale) {
+function getLocaleStorage(locale?: string) {
     if (locale) {
         return locale;
     }
     return window.localStorage.getItem('LANG') || 'zh-CN';
 }
 
-function addStorageListener(handle) {
+function addStorageListener(handle: () => void) {
     document.addEventListener('storageChanged', () => {
         handle();
     });

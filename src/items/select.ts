@@ -3,15 +3,18 @@
  * @author skykun
  */
 
+import { FormType } from './form';
 import Input from './input';
 
+type CustomHTMLSelectElement = HTMLSelectElement & { selected: boolean };
+
 export default class Select extends Input {
-    constructor(data) {
+    constructor(data: FormType) {
         super(data);
         this.defaultValue = this.metaData.defaultValue;
     }
 
-    handleItemTpl(data) {
+    handleItemTpl(data: {value: string, text: string}) {
         return `<option value="${data.value}" ${data.value === this.defaultValue ? 'selected': ''}>${this.setLocaleText(data.text)}</option>`;
     }
 
@@ -36,7 +39,7 @@ export default class Select extends Input {
     getValue() {
         let $radioItems = document.getElementById(this.uuid);
         let res = '';
-        [].forEach.call($radioItems.children, el => {
+        [].forEach.call($radioItems.children, (el: CustomHTMLSelectElement) => {
             if (el.selected) {
                 res = el.value;
             }

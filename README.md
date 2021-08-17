@@ -25,7 +25,8 @@
 ```
 * import files into your project.   
 ```javascript
-    import * as FormGen from 'form-genki'
+    import * as FormGen from 'form-genki'; // or you can import below
+    import { Render } from 'form-genki';
 ```
 ```html
     <script type="text/javascript" src="node_modules/form-genki/dist/FormGen.js"></script>
@@ -61,7 +62,6 @@
 ```json
     [
     {
-        "id": "abcdefg",
         "properties": [
             {
                 "name": "DummyText",

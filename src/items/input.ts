@@ -2,11 +2,12 @@
  * @file input file
  * @author skykun
  */
-import Form from './form';
+import { FormSchemaProperty } from '../types';
+import Form, { FormType } from './form';
 import Label from './labels';
 
-export default class Input extends Form {
-    constructor(data) {
+export default class Input extends Form<string> {
+    constructor(data: FormType) {
         super(data);
         this.type = this.metaData.type.toLowerCase();
     }
@@ -29,14 +30,14 @@ export default class Input extends Form {
         if (this.type === 'CHECKBOX') {
             value = 'checked';
         }
-        return document.getElementById(this.uuid)[value];
+        return (document.getElementById(this.uuid) as HTMLInputElement).value;
     }
 
     /**
      * @override
      */
-    setValue(data) {
-        document.getElementById(this.uuid).value = data;
+    setValue(data: string) {
+        (document.getElementById(this.uuid) as HTMLInputElement).value = data;
     }
 
     /**

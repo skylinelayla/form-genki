@@ -4,19 +4,28 @@
  */
 import Input from './items/input';
 import Select from './items/select';
-import Button from './items/button';
 import Radio from './items/radio';
 
 import {addStorageListener, getLocaleStorage, resetLocalStorageEvent} from './utils/setLocale';
 import {generateID} from './utils/genUUID';
 import {createElement} from './utils/dom';
+import { FormSchema, FormSchemaProperty } from './types';
+import Form from './items/form';
 
 class Render {
-    constructor(data) {
+    data: any;
+    locale: string;
+    itemInstance: Form<any>[];
+    $container: HTMLElement;
+    resultValue: any;
+    formId: string;
+    containerId: string;
+    $formWrapper: HTMLElement;
+
+    constructor(data: FormSchema) {
         resetLocalStorageEvent();
         this.data = data;
         this.locale = getLocaleStorage();
-        this.itemInstance = [];
         this.$container = null;
         this.resultValue = {};
         this.formId = generateID();
@@ -44,9 +53,9 @@ class Render {
     }
 
     getFormData() {
-        this.itemInstance.forEach(e => {
+        [].forEach.call(this.itemInstance, (e: Form<any>) => {
             this.resultValue[e.getName()] = e.getValue();
-        });
+        })
         return this.resultValue;
     }
 
@@ -54,7 +63,7 @@ class Render {
      * set form data by data
      * @param {object} data {key: value} 
      */
-    setFormValue(data) {
+    setFormValue(data: {[key: string]: any }) {
         if (typeof data !== 'object') {
             throw new Error('set form data must be object');
         }
@@ -88,7 +97,7 @@ class Render {
         return createElement('form', {class: 'form-genki-block', id: this.formId});
     }
 
-    getRawHtml(data) {
+    getRawHtml(data: FormSchema) {
         let item = null;
         let htmlRaw = '';
         this.itemInstance = [];
@@ -103,9 +112,6 @@ class Render {
                     break;
                 case 'SELECT':
                     item = new Select(param);
-                    break;
-                case 'BUTTON':
-                    item = new Button(param);
                     break;
                 case 'RADIO':
                     item = new Radio(param);

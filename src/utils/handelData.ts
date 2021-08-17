@@ -3,10 +3,20 @@
  * @author skykun
  */
 
-const TYPE = ['TEXT', 'TEXTAREA', 'CHECK', 'RADIO', 'SELECT', 'SUBMIT']
+import { ConfigDataType } from "../types";
 
-class HandleData {
-    constructor(data) {
+class HandleData<T> {
+    formatData: {
+        type: string;
+        defaultValue: T | T[];
+        clazz: string;
+        label: string;
+        span: number;
+        hint: string;
+    };
+    originData: ConfigDataType<T>;
+
+    constructor(data: ConfigDataType<T>) {
         /**
          * type: form item type
          * defaultValue: form item default value
@@ -16,10 +26,10 @@ class HandleData {
          */
         this.formatData = {
             type: '',
-            defaultValue: '',
+            defaultValue: null,
             clazz: '',
             label: '',
-            span: '',
+            span: 0,
             hint: ''
         };
         this.originData = data;

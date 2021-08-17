@@ -3,7 +3,7 @@
  * @author skykun
  */
 
-function createElement(tag, attr) {
+function createElement(tag: string, attr: {[key: string]: any}) {
     if (typeof tag !== 'string') {
         return;
     }
@@ -16,8 +16,8 @@ function createElement(tag, attr) {
     return $dom;
 }
 
-function forEachElement(htmlList, cb) {
-    [].forEach.call(htmlList, el => {
+function forEachElement(htmlList: HTMLCollection, cb: (el: HTMLElement) => void) {
+    [].forEach.call(htmlList, (el: HTMLElement) => {
         cb(el);
     });
 }

@@ -2,9 +2,10 @@
  * @file label
  * @author skykun
  */
-import Form from './form';
-class Label extends Form {
-    constructor(data) {
+import Form, { FormType } from './form';
+
+class Label extends Form<string> {
+    constructor(data: FormType) {
         super(data);
     }
 

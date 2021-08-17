@@ -4,8 +4,9 @@ const libraryName = 'FormGen';
 const fileName = `${libraryName}.js`;
 
 module.exports = {
-    entry: './index.js',
+    entry: './index.ts',
     devtool: 'source-map',
+    mode: 'production',
     output: {
         filename: fileName,
         path: path.resolve(__dirname, 'dist'),
@@ -13,8 +14,14 @@ module.exports = {
         globalObject: 'this',
         libraryTarget: 'umd'
     },
+    optimization: {
+      minimize: true,
+    },
     externals: {
       'bootstrap': 'bootstrap'
+    },
+    resolve: {
+      extensions: ['.ts', '.js', '.json'],
     },
     module: {
         rules: [
@@ -26,6 +33,11 @@ module.exports = {
           {
             test: /(\\.jsx|\\.js)$/,
             loader: "eslint-loader",
+            exclude: /node_modules/
+          },
+          {
+            test: /\.tsx?$/,
+            loader: 'ts-loader',
             exclude: /node_modules/
           },
           {
