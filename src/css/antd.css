@@ -1,0 +1,104 @@
+/** ant design theme **/
+.form-genki-block .form-group {
+    display: flex;
+    align-items: center;
+}
+.form-genki-block .form-group label {
+    line-height: 39.9999px;
+    white-space: nowrap;
+    text-align: right;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.85);
+    margin-right: 8px;
+    user-select: none;
+}
+/** input */
+.form-genki-block .form-group input, .form-genki-select-wrapper {
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    transition: all 0.3s;
+    height: 32px;
+    width: 100%;
+    line-height: 40px;
+    touch-action: manipulation;
+    padding: 4px 11px;
+    box-sizing: border-box;
+}
+.form-genki-block .form-group input:focus, .form-genki-select-wrapper:active {
+    border-color: #40a9ff;
+    border-right-width: 1px !important;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
+}
+.form-genki-select-wrapper {
+    position: relative;
+}
+.form-genki-select {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 30px;
+    margin-left: 11px;
+    touch-action: manipulation;
+    user-select: none;
+
+}
+.form-genki-select-wrapper .form-genki-arrow {
+    position: absolute;
+    top: 50%;
+    right: 11px;
+    user-select: none;
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.25);
+    font-size: 11px;
+    margin-top: -6px;
+    line-height: 1;
+    transform-origin: 50% 50%;
+}
+
+.form-genki-select-wrapper .form-genki-select-items {
+    position: absolute;
+    top: 33px;
+    left: 0;
+    display: none;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    color: rgba(0, 0, 0, .65);
+    z-index: 1050;
+    max-height: 250px;
+    padding: 4px 0;
+    list-style: none;
+    overflow: auto;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+}
+.form-genki-select-wrapper .form-genki-select-items li {
+    position: relative;
+    display: block;
+    padding: 5px 12px;
+    overflow: hidden;
+    color: rgba(0,0,0,.65);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: background .3s ease;
+}
+
+.form-genki-select-wrapper .form-genki-select-items li:hover {
+    background-color: #e6f7ff;
+}

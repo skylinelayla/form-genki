@@ -12,6 +12,8 @@ declare class Render {
     constructor(data: FormSchema);
     render(): void;
     mount(): void;
+    attachEvent(): void;
+    detachEvent(): void;
     getFormData(): any;
     /**
      * set form data by data

@@ -9,7 +9,7 @@ import Radio from './items/radio';
 import {addStorageListener, getLocaleStorage, resetLocalStorageEvent} from './utils/setLocale';
 import {generateID} from './utils/genUUID';
 import {createElement} from './utils/dom';
-import { FormSchema, FormSchemaProperty } from './types';
+import { FormSchema } from './types';
 import Form from './items/form';
 
 class Render {
@@ -45,11 +45,21 @@ class Render {
             throw new Error('please check form container is provided');
         }
         this.mount();
+        this.attachEvent();
     }
 
     mount() {
         this.$formWrapper.innerHTML = this.getRawHtml(this.data);
         this.$container.innerHTML = this.$formWrapper.outerHTML;
+    }
+
+    attachEvent() {
+        [].forEach.call(this.itemInstance, (e: Form<any>) => {
+            e.handleAction();
+        });
+    }
+
+    detachEvent() {
     }
 
     getFormData() {

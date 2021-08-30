@@ -24,5 +24,7 @@ declare abstract class Form<T> {
     setLocaleText(data: any): any;
     /** set item wrapper dom */
     setWrapper(): HTMLElement;
+    /** handle action */
+    handleAction(): void;
 }
 export default Form;

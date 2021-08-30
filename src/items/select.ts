@@ -9,13 +9,15 @@ import Input from './input';
 type CustomHTMLSelectElement = HTMLSelectElement & { selected: boolean };
 
 export default class Select extends Input {
+    menuId: string;
     constructor(data: FormType) {
         super(data);
         this.defaultValue = this.metaData.defaultValue;
+        this.menuId = `select-menu-${this.uuid}`;
     }
 
     handleItemTpl(data: {value: string, text: string}) {
-        return `<option value="${data.value}" ${data.value === this.defaultValue ? 'selected': ''}>${this.setLocaleText(data.text)}</option>`;
+        return `<li value="${data.value}" ${data.value === this.defaultValue ? 'selected': ''}>${data.text}</li>`;
     }
 
     /**
@@ -29,8 +31,48 @@ export default class Select extends Input {
             res += this.handleItemTpl(item);
             return res;
         }, '');
+
         // wrap select container
-        return `<select id="${this.uuid}" name="${this.metaData.name}" class="form-genki-select ${this.setStyle()}">${selectItems}</select>`
+        return `<div class="form-genki-select-wrapper"><div id="${this.uuid}" name="${this.metaData.name}" class="form-genki-select ${this.setStyle()}"></div>
+        <div class="form-genki-select-items" id=${this.menuId} style="display: none">${selectItems}</div>${this.getSelectIcon()}</div>`
+    }
+
+    /**
+     * @override
+     * handle select click & choose event
+     */
+    handleAction() {
+        const $select = document.getElementById(this.uuid);
+        const $selectItems = document.getElementById(this.menuId);
+
+        $select.addEventListener('click', (evt) => {
+            this.toggleItems($selectItems);
+        });
+        $selectItems.addEventListener('click', (evt) => {
+            const itemElement = evt.target as Element;
+            if (itemElement.tagName === 'LI') {
+                // get value of li
+                const selectVal = itemElement.getAttribute('value');
+                const selectName = itemElement.innerHTML;
+                // set select value
+                $select.innerHTML = selectName;
+            }
+            this.toggleItems($selectItems);
+        });
+    }
+
+    /**
+     * control select drop menu
+     */
+    private toggleItems ($selectItems: HTMLElement) {
+        $selectItems.style.display = $selectItems.style.display === 'block' ? 'none' : 'block';
+    }
+
+    /**
+     * select arrow content
+     */
+    getSelectIcon() {
+        return `<span class="form-genki-arrow">1</span>`
     }
 
     /**

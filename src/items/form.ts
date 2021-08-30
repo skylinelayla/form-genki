@@ -51,6 +51,11 @@ abstract class Form<T> {
     setWrapper() {
         return createElement('div', {class: 'form-group', id: generateID()})
     }
+
+    /** handle action */
+    handleAction() {
+
+    }
 }
 
 export default Form;
