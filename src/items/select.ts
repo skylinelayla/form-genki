@@ -5,15 +5,18 @@
 
 import { FormType } from './form';
 import Input from './input';
+import ArrowIcon from '../assets/icon/arrow.svg';
 
 type CustomHTMLSelectElement = HTMLSelectElement & { selected: boolean };
 
 export default class Select extends Input {
     menuId: string;
+    arrowId: string;
     constructor(data: FormType) {
         super(data);
         this.defaultValue = this.metaData.defaultValue;
         this.menuId = `select-menu-${this.uuid}`;
+        this.arrowId = `select-menu-arrow-${this.uuid}`;
     }
 
     handleItemTpl(data: {value: string, text: string}) {
@@ -44,21 +47,30 @@ export default class Select extends Input {
     handleAction() {
         const $select = document.getElementById(this.uuid);
         const $selectItems = document.getElementById(this.menuId);
+        const $arrow = document.getElementById(this.arrowId);
 
         $select.addEventListener('click', (evt) => {
             this.toggleItems($selectItems);
+            this.toggleIcon($arrow);
         });
         $selectItems.addEventListener('click', (evt) => {
             const itemElement = evt.target as Element;
             if (itemElement.tagName === 'LI') {
                 // get value of li
-                const selectVal = itemElement.getAttribute('value');
                 const selectName = itemElement.innerHTML;
                 // set select value
                 $select.innerHTML = selectName;
             }
             this.toggleItems($selectItems);
         });
+        // click outside to close selectItems
+        document.addEventListener('click', (evt) => {
+            if (!$select.contains(evt.target as Node)) {
+                $selectItems.style.display = 'none';
+                $arrow.style.transform = 'unset';
+            }
+        })
+        
     }
 
     /**
@@ -69,10 +81,18 @@ export default class Select extends Input {
     }
 
     /**
+     * set arrow icon style
+     */
+    private toggleIcon ($icon: HTMLElement) {
+        const iconTransform = $icon.style.transform;
+        $icon.style.transform = (!iconTransform || iconTransform === 'unset') ? 'rotate(180deg)' : 'unset';
+    }
+
+    /**
      * select arrow content
      */
     getSelectIcon() {
-        return `<span class="form-genki-arrow">1</span>`
+        return `<span class="form-genki-arrow" id=${this.arrowId}>${ArrowIcon}</span>`
     }
 
     /**

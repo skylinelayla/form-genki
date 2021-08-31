@@ -54,16 +54,25 @@
 
 }
 .form-genki-select-wrapper .form-genki-arrow {
+    display: inline-block;
+    color: inherit;
+    font-style: normal;
+    line-height: 0;
+    text-align: center;
+    text-transform: none;
+    vertical-align: -.125em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     position: absolute;
     top: 50%;
     right: 11px;
-    user-select: none;
-    display: inline-block;
-    color: rgba(0, 0, 0, 0.25);
-    font-size: 11px;
     margin-top: -6px;
+    color: rgba(0,0,0,.25);
+    font-size: 12px;
     line-height: 1;
     transform-origin: 50% 50%;
+    transition: transform .3s;
 }
 
 .form-genki-select-wrapper .form-genki-select-items {

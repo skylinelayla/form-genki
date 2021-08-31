@@ -19,6 +19,8 @@
   "devDependencies": {
     "@types/shortid": "0.0.29",
     "css-loader": "^3.2.0",
+    "file-loader": "^6.2.0",
+    "raw-loader": "^4.0.2",
     "style-loader": "^1.0.0",
     "ts-loader": "^8.2.0",
     "typescript": "^4.3.5",

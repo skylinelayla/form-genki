@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="src/css/antd.css">
+        <script src="dist/FormGen.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="form-container"></div>
+        
+        <script>
+            const configData = [
+                {
+                    name: 'TestInput',
+                    type: 'TEXT',
+                    labelText: {
+                        "zh-CN": '请输入',
+                    },
+                    hintText: '请输入',
+                },
+                {
+                    name: 'TestSelect',
+                    type: 'SELECT',
+                    labelText: {
+                        "zh-CN": '请选择',
+                    },
+                    hintText: '请选择',
+                    items: [
+                      {
+                        text: '选项1',
+                        value: 'select1'
+                      },
+                      {
+                         text: '选项2',
+                         value: 'select2'
+                      }
+                    ]
+                }
+            ];
+            const form = new FormGen.Render({
+               containerId: 'form-container',
+               properties: configData,
+            });
+            form.render();
+        </script>
+    </body>
+</html>

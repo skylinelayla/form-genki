@@ -32,7 +32,7 @@ module.exports = {
           },
           {
             test: /(\\.jsx|\\.js)$/,
-            loader: "eslint-loader",
+            loader: 'eslint-loader',
             exclude: /node_modules/
           },
           {
@@ -43,6 +43,10 @@ module.exports = {
           {
             test: /\.css$/i,
             loader: ['style-loader', 'css-loader']
+          },
+          {
+            test: /\.svg/,
+            loader: 'raw-loader'
           }
         ]
     },
