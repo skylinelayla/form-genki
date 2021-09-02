@@ -53,9 +53,10 @@ abstract class Form<T> {
     }
 
     /** handle action */
-    handleAction() {
+    handleAction() {}
 
-    }
+    /** do something after remove form */
+    removeAction() {}
 }
 
 export default Form;

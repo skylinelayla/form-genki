@@ -22,6 +22,20 @@ export default class Select extends Input {
      */
     handleAction(): void;
     /**
+     * @override
+     * remove event listener
+     */
+    removeAction(): void;
+    private getSelectItems;
+    /**
+     *
+     * @param $selectItems
+     * @param $arrow
+     */
+    private handleSelectClick;
+    private handleSelectItemClick;
+    private handleDocumentClick;
+    /**
      * control select drop menu
      */
     private toggleItems;

@@ -60,6 +60,9 @@ class Render {
     }
 
     detachEvent() {
+        [].forEach.call(this.itemInstance, (e: Form<any>) => {
+            e.removeAction();
+        });
     }
 
     getFormData() {
@@ -92,6 +95,7 @@ class Render {
     }
 
     destroy() {
+        this.detachEvent();
         this.$container.innerHTML = '';
     }
 

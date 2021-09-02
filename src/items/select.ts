@@ -45,32 +45,71 @@ export default class Select extends Input {
      * handle select click & choose event
      */
     handleAction() {
-        const $select = document.getElementById(this.uuid);
-        const $selectItems = document.getElementById(this.menuId);
-        const $arrow = document.getElementById(this.arrowId);
-
+        const {$select, $selectItems, $arrow} = this.getSelectItems();
         $select.addEventListener('click', (evt) => {
-            this.toggleItems($selectItems);
-            this.toggleIcon($arrow);
+            this.handleSelectClick($selectItems, $arrow);
         });
         $selectItems.addEventListener('click', (evt) => {
-            const itemElement = evt.target as Element;
-            if (itemElement.tagName === 'LI') {
-                // get value of li
-                const selectName = itemElement.innerHTML;
-                // set select value
-                $select.innerHTML = selectName;
-            }
-            this.toggleItems($selectItems);
+            this.handleSelectItemClick(evt, $select, $selectItems);
         });
         // click outside to close selectItems
         document.addEventListener('click', (evt) => {
-            if (!$select.contains(evt.target as Node)) {
-                $selectItems.style.display = 'none';
-                $arrow.style.transform = 'unset';
-            }
-        })
-        
+            this.handleDocumentClick(evt, $select, $selectItems, $arrow);
+        });
+    }
+
+    /**
+     * @override
+     * remove event listener
+     */
+    removeAction() {
+        const {$select, $selectItems, $arrow} = this.getSelectItems();
+        $select.removeEventListener('click', (evt) => {
+            this.handleSelectClick($selectItems, $arrow);
+        });
+        $selectItems.removeEventListener('click', (evt) => {
+            this.handleSelectItemClick(evt, $select, $selectItems);
+        });
+        // click outside to close selectItems
+        document.removeEventListener('click', (evt) => {
+            this.handleDocumentClick(evt, $select, $selectItems, $arrow);
+        });
+    }
+
+    private getSelectItems () {
+        return {
+            $select: document.getElementById(this.uuid),
+            $selectItems: document.getElementById(this.menuId),
+            $arrow:  document.getElementById(this.arrowId),
+        };
+    }
+
+    /**
+     * 
+     * @param $selectItems 
+     * @param $arrow 
+     */
+    private handleSelectClick ($selectItems: HTMLElement, $arrow: HTMLElement) {
+        this.toggleItems($selectItems);
+        this.toggleIcon($arrow);
+    }
+
+    private handleSelectItemClick (evt: MouseEvent, $select: HTMLElement, $selectItems: HTMLElement) {
+        const itemElement = evt.target as Element;
+        if (itemElement.tagName === 'LI') {
+            // get value of li
+            const selectName = itemElement.innerHTML;
+            // set select value
+            $select.innerHTML = selectName;
+        }
+        this.toggleItems($selectItems);
+    }
+
+    private handleDocumentClick (evt: MouseEvent, $select: HTMLElement, $selectItems: HTMLElement, $arrow: HTMLElement) {
+        if (!$select.contains(evt.target as Node)) {
+            $selectItems.style.display = 'none';
+            $arrow.style.transform = 'unset';
+        }
     }
 
     /**

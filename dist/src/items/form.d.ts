@@ -26,5 +26,7 @@ declare abstract class Form<T> {
     setWrapper(): HTMLElement;
     /** handle action */
     handleAction(): void;
+    /** do something after remove form */
+    removeAction(): void;
 }
 export default Form;
