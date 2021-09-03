@@ -30,7 +30,7 @@ class Render {
         this.resultValue = {};
         this.formId = generateID();
         this.containerId = data.containerId || 'form-container';
-        var me = this;
+        const me = this;
         // reset locale while local storage changed
         addStorageListener(function () {
             me.locale = getLocaleStorage();
@@ -65,7 +65,7 @@ class Render {
         });
     }
 
-    getFormData() {
+    getFormData(): {[key: string]: any} {
         [].forEach.call(this.itemInstance, (e: Form<any>) => {
             this.resultValue[e.getName()] = e.getValue();
         })
@@ -107,16 +107,16 @@ class Render {
         this.mount();
     }
 
-    getFormWrapper() {
+    getFormWrapper(): HTMLElement {
         return createElement('form', {class: 'form-genki-block', id: this.formId});
     }
 
-    getRawHtml(data: FormSchema) {
+    getRawHtml(data: FormSchema): string {
         let item = null;
         let htmlRaw = '';
         this.itemInstance = [];
         data.properties.forEach(property => {
-            let param = {
+            const param = {
                 ...property,
                 localeKey: this.locale
             };

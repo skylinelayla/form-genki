@@ -2,7 +2,6 @@
  * @file input file
  * @author skykun
  */
-import { FormSchemaProperty } from '../types';
 import Form, { FormType } from './form';
 import Label from './labels';
 
@@ -16,8 +15,8 @@ export default class Input extends Form<string> {
      * @override
      */
     getHtml() {
-        let labelRaw = new Label(this.metaData);
-        let $wrapperContainer = this.setWrapper();
+        const labelRaw = new Label(this.metaData);
+        const $wrapperContainer = this.setWrapper();
         $wrapperContainer.innerHTML = `${labelRaw.getHtml()} ${this.handleTpl()}`;
         return $wrapperContainer.outerHTML;
     }
@@ -48,7 +47,7 @@ export default class Input extends Form<string> {
     }
 
     handleTpl() {
-        let defaultValue = this.metaData.defaultValue;
+        const defaultValue = this.metaData.defaultValue;
         return `<input type="${this.type}" 
         id="${this.uuid}"
         name="${this.metaData.name}"

@@ -1,3 +1,7 @@
+/**
+ * @file input file
+ * @author skykun
+ */
 import Form, { FormType } from './form';
 export default class Input extends Form<string> {
     constructor(data: FormType);

@@ -4,7 +4,7 @@
  */
 import {generateID} from '../utils/genUUID';
 import {createElement} from '../utils/dom';
-import { FormSchema, FormSchemaProperty, TYPE } from '../types';
+import { FormSchemaProperty } from '../types';
 
 export type FormType = FormSchemaProperty & {
     localeKey?: string;
@@ -24,24 +24,24 @@ abstract class Form<T> {
     }
 
     /** value validation */
-    checkValue() {}
+    checkValue() { return; }
 
     /** get item name */
-    getName() {
+    getName(): string {
         return this.metaData.name;
     }
 
     /** get form value */
-    getValue() {};
+    getValue() { return; }
 
     /** set defaultValue for form */
-    setValue(value: T) {};
+    setValue(value: T) { return; }
 
     /** get form html */
     abstract getHtml(): string;
 
     /** set style */
-    setStyle() {}
+    setStyle() { return; }
 
     setLocaleText(data: any) {
         return data[this.locale] || false;
@@ -53,10 +53,10 @@ abstract class Form<T> {
     }
 
     /** handle action */
-    handleAction() {}
+    handleAction() { return; }
 
     /** do something after remove form */
-    removeAction() {}
+    removeAction() { return; }
 }
 
 export default Form;

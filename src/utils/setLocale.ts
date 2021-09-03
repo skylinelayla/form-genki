@@ -16,12 +16,12 @@ function addStorageListener(handle: () => void) {
     });
 }
 
-function resetLocalStorageEvent() {
-    var originSetItem = localStorage.setItem;
+function resetLocalStorageEvent(...args: any) {
+    const originSetItem = localStorage.setItem;
     localStorage.setItem = function (key, value) {
         // custom storage event
-        originSetItem.apply(this, arguments);
-        var event = new Event('storageChanged');
+        originSetItem.apply(this, args);
+        const event = new Event('storageChanged');
         document.dispatchEvent(event);
     };
 }

@@ -24,5 +24,5 @@ export default class Radio extends Input {
      * @override
      */
     setValue(value: string): void;
-    findItemCollection(): HTMLCollectionOf<Element>;
+    findItemCollection(): HTMLCollection;
 }

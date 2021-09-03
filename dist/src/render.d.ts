@@ -14,7 +14,9 @@ declare class Render {
     mount(): void;
     attachEvent(): void;
     detachEvent(): void;
-    getFormData(): any;
+    getFormData(): {
+        [key: string]: any;
+    };
     /**
      * set form data by data
      * @param {object} data {key: value}

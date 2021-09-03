@@ -15,7 +15,7 @@ export default class Select extends Input {
     /**
      * @override
      */
-    handleTpl(): string;
+    handleTpl(): string | never;
     /**
      * @override
      * handle select click & choose event

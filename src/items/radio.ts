@@ -21,8 +21,8 @@ export default class Radio extends Input {
 
     handleItemTpl(data: {text: string; value: string}) {
         // restructure data for radio button form
-        let id = generateID();
-        let labelRaw = new Label({
+        const id = generateID();
+        const labelRaw = new Label({
             ...this.metaData,
             labelText: data.text,
             name: id,
@@ -36,7 +36,7 @@ export default class Radio extends Input {
     /**
      * @override
      */
-    handleTpl() {
+    handleTpl(): string {
         return this.metaData.items.reduce((res, item, idx) => {
             res += this.handleItemTpl(item);
             return res;
@@ -46,7 +46,7 @@ export default class Radio extends Input {
     /**
      * @override
      */
-    getValue() {
+    getValue(): string {
         let res = '';
         forEachElement(this.findItemCollection(), (el: HTMLInputElement) => {
             if (el.checked) {
@@ -59,13 +59,13 @@ export default class Radio extends Input {
     /**
      * @override
      */
-    setValue(value: string) {
+    setValue(value: string): void {
         forEachElement(this.findItemCollection(), (el: HTMLInputElement) => {
             el.checked = (el.value == value);
         });
     }
 
-    findItemCollection() {
+    findItemCollection(): HTMLCollection {
         return document.getElementsByClassName(`radio-item-${this.radioId}`);
     }
 }

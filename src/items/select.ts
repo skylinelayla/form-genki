@@ -19,18 +19,18 @@ export default class Select extends Input {
         this.arrowId = `select-menu-arrow-${this.uuid}`;
     }
 
-    handleItemTpl(data: {value: string, text: string}) {
+    handleItemTpl(data: {value: string, text: string}): string {
         return `<li value="${data.value}" ${data.value === this.defaultValue ? 'selected': ''}>${data.text}</li>`;
     }
 
     /**
      * @override
      */
-    handleTpl() {
+    handleTpl(): string | never {
         if (!this.metaData.items.length) {
             throw new Error('please check select element items');
         }
-        let selectItems = this.metaData.items.reduce((res, item) => {
+        const selectItems = this.metaData.items.reduce((res, item) => {
             res += this.handleItemTpl(item);
             return res;
         }, '');
@@ -44,7 +44,7 @@ export default class Select extends Input {
      * @override
      * handle select click & choose event
      */
-    handleAction() {
+    handleAction(): void {
         const {$select, $selectItems, $arrow} = this.getSelectItems();
         $select.addEventListener('click', (evt) => {
             this.handleSelectClick($selectItems, $arrow);
@@ -62,7 +62,7 @@ export default class Select extends Input {
      * @override
      * remove event listener
      */
-    removeAction() {
+    removeAction(): void {
         const {$select, $selectItems, $arrow} = this.getSelectItems();
         $select.removeEventListener('click', (evt) => {
             this.handleSelectClick($selectItems, $arrow);
@@ -130,15 +130,15 @@ export default class Select extends Input {
     /**
      * select arrow content
      */
-    getSelectIcon() {
+    getSelectIcon(): string {
         return `<span class="form-genki-arrow" id=${this.arrowId}>${ArrowIcon}</span>`
     }
 
     /**
      * @override
      */
-    getValue() {
-        let $radioItems = document.getElementById(this.uuid);
+    getValue(): string {
+        const $radioItems = document.getElementById(this.uuid);
         let res = '';
         [].forEach.call($radioItems.children, (el: CustomHTMLSelectElement) => {
             if (el.selected) {

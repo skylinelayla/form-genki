@@ -21,9 +21,13 @@
     "expect": true,
     "sinon": true
   },
-  "parser": "babel-eslint",
-  "plugins": [],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "rules": {
-    // ... lots of lots of rules here
+    "@typescript-eslint/no-this-alias": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0
   }
 }
