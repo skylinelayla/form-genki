@@ -1,4 +1,4 @@
-export type TYPE = 'TEXT' | 'TEXTAREA' | 'CHECK' | 'RADIO' | 'SELECT' | 'SUBMIT';
+export type TYPE = 'TEXT' | 'TEXTAREA' | 'CHECK' | 'RADIO' | 'SELECT' | 'SUBMIT' | 'DATE';
 export type Locals = 'zh-CN' | 'en-US';
 
 export interface ConfigDataType<T> {

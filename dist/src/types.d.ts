@@ -1,4 +1,4 @@
-export declare type TYPE = 'TEXT' | 'TEXTAREA' | 'CHECK' | 'RADIO' | 'SELECT' | 'SUBMIT';
+export declare type TYPE = 'TEXT' | 'TEXTAREA' | 'CHECK' | 'RADIO' | 'SELECT' | 'SUBMIT' | 'DATE';
 export declare type Locals = 'zh-CN' | 'en-US';
 export interface ConfigDataType<T> {
     /** form type */
