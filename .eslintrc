@@ -28,6 +28,7 @@
   "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "@typescript-eslint/no-this-alias": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "max-len": ["error", {"code": 130}]
   }
 }
