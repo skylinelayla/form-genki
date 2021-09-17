@@ -165,7 +165,7 @@ export default class Calendar extends Input {
             for(let j = 0; j < 7; j++) {
                 const td = daysList[i * 7 + j];
                 tdContent += `<td class="${this.prefixClazzName}-table-td">
-                    <div class="${this.prefixClazzName}-cell${td.isCurrentMonth ? ' current-days' : ''}" data-id="${td.date}">
+                    <div class="${this.prefixClazzName}-cell${td.isCurrentMonth ? ' current-days' : ''}" data-time="${td.date}">
                         ${td.value}
                     </div>
                 </td>`;
