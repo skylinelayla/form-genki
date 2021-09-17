@@ -224,6 +224,7 @@
     cursor: pointer;
 }
 .form-genki-calendar-wrapper .form-genki-calendar-panel-wrapper {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;

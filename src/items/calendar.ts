@@ -188,7 +188,7 @@ export default class Calendar extends Input {
 
     private getPopOverTableContent() {
         return `
-        <div class="form-genki-calendar-panel-wrapper">
+        <div class="form-genki-calendar-panel-wrapper" id="${this.uuid}-panel-container">
             ${this.getPopInput()}
             <div class="form-genki-calendar-panel" id="${this.uuid}-panel">
                 ${this.generateCalendarHeader()}
@@ -206,7 +206,7 @@ export default class Calendar extends Input {
         return `<div class="${this.prefixClazzName}" id="${this.uuid}">
             <div id="${this.uuid}" name="${this.metaData.name}" class="form-genki-calender ${this.setStyle()}">
                 ${this.generateCalendarInput()}
-                <div id="${this.uuid}-panel-container"></div>
+                ${this.getPopOverTableContent()}
             </div>
         </div>`;
     }
@@ -228,15 +228,16 @@ export default class Calendar extends Input {
             }
         });
         $table.addEventListener('click', (evt) => {
-            console.log(evt);
+            const value = (evt.target as HTMLElement).dataset.time;
+            alert(value);
         });
     }
 
     private toggleItems ($panelWrapper: HTMLElement) {
-        if ($panelWrapper.innerHTML) {
-            $panelWrapper.innerHTML = '';
+        if ($panelWrapper.style.display === 'none') {
+            $panelWrapper.style.display = 'block';
         } else {
-            $panelWrapper.innerHTML = this.getPopOverTableContent();
+            $panelWrapper.style.display = 'none';
         }
     }
 
