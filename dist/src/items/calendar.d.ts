@@ -7,6 +7,7 @@ import { FormType } from './form';
 export default class Calendar extends Input {
     private prefixClazzName;
     currentTime: Date;
+    selectTime: string;
     constructor(data: FormType);
     /**
      * get month days number;
@@ -51,6 +52,7 @@ export default class Calendar extends Input {
      * @param begin last month of next month
      */
     private getMonthSurplusDays;
+    private getBesideMonthDate;
     /**
      * get month table
      */
@@ -65,7 +67,7 @@ export default class Calendar extends Input {
      */
     handleTpl(): string;
     handleAction(): void;
-    private toggleItems;
+    private formatDate;
     /**
      * @override
      */

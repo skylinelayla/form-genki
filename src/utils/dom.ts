@@ -22,4 +22,9 @@ function forEachElement(htmlList: HTMLCollection, cb: (el: HTMLElement) => void)
     });
 }
 
-export {createElement, forEachElement};
+function getDOMById(id: string): HTMLElement {
+    const $dom = document.getElementById(id);
+    return $dom || null;
+}
+
+export {createElement, forEachElement, getDOMById};

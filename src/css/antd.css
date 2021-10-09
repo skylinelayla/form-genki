@@ -223,8 +223,10 @@
     background: #e6f7ff;
     cursor: pointer;
 }
+.form-genki-calendar-wrapper td .selected {
+    background: #bae7ff;
+}
 .form-genki-calendar-wrapper .form-genki-calendar-panel-wrapper {
-    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -307,6 +309,7 @@
     font-family: Arial,hiragino sans gb,microsoft yahei,'microsoft sans serif',sans-serif;
     line-height: 40px;
     height: 100%;
+    cursor: pointer;
 }
 
 .form-genki-calendar-wrapper .form-genki-calendar-wrapper-table-header .year-prev {

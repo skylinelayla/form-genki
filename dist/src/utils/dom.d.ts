@@ -6,4 +6,5 @@ declare function createElement(tag: string, attr: {
     [key: string]: any;
 }): HTMLElement;
 declare function forEachElement(htmlList: HTMLCollection, cb: (el: HTMLElement) => void): void;
-export { createElement, forEachElement };
+declare function getDOMById(id: string): HTMLElement;
+export { createElement, forEachElement, getDOMById };

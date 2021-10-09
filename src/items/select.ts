@@ -47,6 +47,7 @@ export default class Select extends Input {
     handleAction(): void {
         const {$select, $selectItems, $arrow} = this.getSelectItems();
         $select.addEventListener('click', (evt) => {
+            console.log('select input click');
             this.handleSelectClick($selectItems, $arrow);
         });
         $selectItems.addEventListener('click', (evt) => {

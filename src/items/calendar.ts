@@ -6,6 +6,7 @@
 import Input from './input';
 import DateSvg from '../assets/icon/calendar.svg';
 import { FormType } from './form';
+import { getDOMById } from '../utils/dom';
 
 const DEFAULT_MONTH_LIST = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DEFAULT_WEEK_LIST = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -14,10 +15,12 @@ const CHINA_WEEK_LIST = ['一', '二', '三', '四', '五', '六', '日'];
 export default class Calendar extends Input {
     private prefixClazzName: string;
     currentTime: Date;
+    selectTime: string;
     constructor(data: FormType) {
         super(data);
         this.prefixClazzName = 'form-genki-calendar-wrapper';
         this.currentTime = new Date();
+        this.selectTime = null;
     }
 
     /**
@@ -67,13 +70,13 @@ export default class Calendar extends Input {
     private generateCalendarHeader() {
         return `<div class="${this.prefixClazzName}-table-header">
             <div class="icon year-prev"></div>
-            <div class="icon month-prev"></div>
+            <div class="icon month-prev" id="${this.uuid}-month-prev"></div>
             <span>
                 <a class="year-select">${this.currentTime.getFullYear()}年</a>
                 <a class="month-select">${this.currentTime.getMonth() + 1}月</a>
             </span>
             <div class="icon year-next"></div>
-            <div class="icon month-next"></div>
+            <div class="icon month-next" id="${this.uuid}-month-next"></div>
         </div>`;
     }
     
@@ -86,7 +89,7 @@ export default class Calendar extends Input {
      */
     private generateCalendarInput() {
         return `<div class="${this.prefixClazzName}-input" id="${this.uuid}-input">
-            <span class="${this.prefixClazzName}}-value"></span>
+            <span class="${this.prefixClazzName}-value" id="${this.uuid}-display-input"></span>
             <span class="${this.prefixClazzName}-icon">${DateSvg}</span>
         </div>`;
     }
@@ -98,9 +101,7 @@ export default class Calendar extends Input {
         const currentDays = this.getMonthDays(this.currentTime.getMonth(), this.currentTime.getFullYear());
         // 7x7 cell, find first/last day of current month week order
         const firstDay = new Date(this.currentTime.getFullYear(), this.currentTime.getMonth(), 1);
-        const lastDay = new Date(this.currentTime.getFullYear(), this.currentTime.getMonth() + 1, 0);
         const firstDayWeek = firstDay.getDay();
-        const lastDayWeek = lastDay.getDay();
         // generate 7x7 cell data;
         const prevMonthDays = firstDayWeek - 1;
         const prevDays = this.getMonthDays(this.currentTime.getMonth() - 1, this.currentTime.getFullYear());
@@ -154,10 +155,16 @@ export default class Calendar extends Input {
         }
     }
 
+    private getBesideMonthDate(date: Date, isNext?: 'prev' | 'next') {
+        console.log(isNext === 'prev' ? -1 : 1);
+        console.log('====', date);
+        return new Date(date.getFullYear(), date.getMonth() + isNext === 'prev' ? -1 : 1, date.getDate());
+    }
+
     /**
      * get month table
      */
-    private getMonthTable() {
+    private getMonthTable(date?: string) {
         const daysList = this.getDisplayDays();
         let tableContent = '';
         for(let i = 0; i < 6; i++) {
@@ -165,7 +172,12 @@ export default class Calendar extends Input {
             for(let j = 0; j < 7; j++) {
                 const td = daysList[i * 7 + j];
                 tdContent += `<td class="${this.prefixClazzName}-table-td">
-                    <div class="${this.prefixClazzName}-cell${td.isCurrentMonth ? ' current-days' : ''}" data-time="${td.date}">
+                    <div
+                    class="${this.prefixClazzName}-cell${
+                        td.isCurrentMonth ? ' current-days' : ''}${
+                            date === this.formatDate(td.date) ? ' selected' : ''}"
+                    data-time="${td.date}"
+                    >
                         ${td.value}
                     </div>
                 </td>`;
@@ -182,17 +194,17 @@ export default class Calendar extends Input {
      */
     private getPopInput() {
         return `<div class="${this.prefixClazzName}-pop-input" id="${this.uuid}-pop-input">
-            <input className="${this.prefixClazzName}-input" id="${this.uuid}-input" />
+            <input className="${this.prefixClazzName}-input" id="${this.uuid}-select-input" />
         </div>`;
     }
 
-    private getPopOverTableContent() {
+    private getPopOverTableContent(date?: string) {
         return `
         <div class="form-genki-calendar-panel-wrapper" id="${this.uuid}-panel-container">
             ${this.getPopInput()}
             <div class="form-genki-calendar-panel" id="${this.uuid}-panel">
                 ${this.generateCalendarHeader()}
-                ${this.getMonthTable()}
+                ${this.getMonthTable(date)}
                 ${this.generateBottomActionPanel()}
             </div>
         </div>
@@ -203,42 +215,56 @@ export default class Calendar extends Input {
      * @override
      */
     handleTpl() {
-        return `<div class="${this.prefixClazzName}" id="${this.uuid}">
+        return `<div class="${this.prefixClazzName}">
             <div id="${this.uuid}" name="${this.metaData.name}" class="form-genki-calender ${this.setStyle()}">
                 ${this.generateCalendarInput()}
-                ${this.getPopOverTableContent()}
             </div>
         </div>`;
     }
 
     handleAction() {
-        const $wrapper = document.getElementById(this.uuid);
-        const $input = document.getElementById(`${this.uuid}-input`);
-        const $panel = document.getElementById(`${this.uuid}-panel-container`);
-        const $popInput = document.getElementById(`${this.uuid}-pop-input`);
-        const $table = document.getElementById(`${this.uuid}-table`);
-        const me = this;
-        $input.addEventListener('click', () => {
-            console.log('yes');
-            me.toggleItems($panel);
-        });
-        document.addEventListener('click', (evt) => {
-            if (!$input.contains(evt.target as Node)) {
-                me.toggleItems($panel);
+        const $wrapper = getDOMById(this.uuid);
+
+        $wrapper.addEventListener('click', (evt) => {
+            // pay attention after click input then render td panel
+            const $panel = getDOMById(`${this.uuid}-panel-container`);
+            if ((evt.target as Element).id.includes('month')) {
+                console.log('test yes');
+                // update current time
+                const id = (evt.target as Element).id;
+                if (id.includes('prev')) {
+                    this.currentTime = this.getBesideMonthDate(new Date(this.selectTime), 'prev');
+                    console.log(this.currentTime);
+                } else {
+                    this.currentTime = this.getBesideMonthDate(new Date(this.selectTime), 'next');
+                    console.log(this.currentTime);
+                }
+                return;
             }
-        });
-        $table.addEventListener('click', (evt) => {
-            const value = (evt.target as HTMLElement).dataset.time;
-            alert(value);
+            if ((evt.target as Element).parentElement.nodeName === 'TD') {
+                const value = (evt.target as HTMLElement).dataset.time;
+                const formattedValue = this.formatDate(value);
+                const $selectInput = getDOMById(`${this.uuid}-select-input`) as HTMLInputElement;
+                $selectInput.value = formattedValue;
+                $panel.style.display = 'none';
+                this.selectTime = formattedValue;
+            }
+            if ($panel) {
+                $wrapper.innerHTML = this.generateCalendarInput();
+                const $displayInput = getDOMById(`${this.uuid}-display-input`);
+                $displayInput.innerHTML = this.selectTime;
+     
+            } else {
+                $wrapper.innerHTML = `${$wrapper.innerHTML} ${this.getPopOverTableContent(this.selectTime)}`;
+                const $selectInput = getDOMById(`${this.uuid}-select-input`) as HTMLInputElement;
+                $selectInput.value = this.selectTime;
+            }
         });
     }
 
-    private toggleItems ($panelWrapper: HTMLElement) {
-        if ($panelWrapper.style.display === 'none') {
-            $panelWrapper.style.display = 'block';
-        } else {
-            $panelWrapper.style.display = 'none';
-        }
+    private formatDate(dateStr: Date | string) {
+        const date = new Date(dateStr);
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     }
 
     /**
