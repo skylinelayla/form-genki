@@ -277,6 +277,11 @@
     color: rgba(0,0,0,.85);
     font-weight: 500;
     line-height: 40px;
+    cursor: pointer;
+}
+.form-genki-calendar-wrapper .form-genki-calendar-wrapper-table-header span .year-select:hover,
+.form-genki-calendar-wrapper .form-genki-calendar-wrapper-table-header span .month-select:hover {
+    color: #40a9ff;
 }
 
 .form-genki-calendar-wrapper .form-genki-calendar-wrapper-table-header span .year-select {
