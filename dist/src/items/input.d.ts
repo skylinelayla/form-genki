@@ -12,7 +12,7 @@ export default class Input extends Form<string> {
     /**
      * @override
      */
-    getValue(): string;
+    getValue(): any;
     /**
      * @override
      */

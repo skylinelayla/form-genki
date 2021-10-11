@@ -17,12 +17,32 @@ export default class Calendar extends Input {
      * @returns current months days number
      */
     private getMonthDays;
-    /**
-     * get current date info
-     * @returns current date object
-     */
-    private getCurrentDays;
     private getMonthInfo;
+    /**
+     * get array from 0 to total
+     * @param total number of days;
+     */
+    private generateArrayOrder;
+    /**
+     * get surplus days of next or prev month
+     * @param total the total of a month
+     * @param surplus the number to pick days of a month
+     * @param begin last month of next month
+     */
+    private getMonthSurplusDays;
+    /**
+     * generate current months days
+     */
+    private getDisplayDays;
+    /**
+     * get next month date
+     * @param date current time
+     * @returns next month date time
+     */
+    private getNextMonthDate;
+    private getNextYearDate;
+    private getPrevYearDate;
+    private formatDate;
     /**
      * generate week list content
      */
@@ -38,36 +58,11 @@ export default class Calendar extends Input {
      * mock date input
      */
     private generateCalendarInput;
-    /**
-     * generate current months days
-     */
-    private getDisplayDays;
-    private getWeekNumberOfYears;
-    /**
-     * get array from 0 to total
-     * @param total number of days;
-     */
-    private generateArrayOrder;
-    /**
-     * get surplus days of next or prev month
-     * @param total the total of a month
-     * @param surplus the number to pick days of a month
-     * @param begin last month of next month
-     */
-    private getMonthSurplusDays;
-    /**
-     * get next month date
-     * @param date current time
-     * @returns next month date time
-     */
-    private getNextMonthDate;
-    private getNextYearDate;
-    private getPrevYearDate;
     private getPrevMonthDate;
     /**
      * get month table
      */
-    private getMonthTable;
+    getMonthTable(date?: string): string;
     /**
      * panel show input dom
      */
@@ -80,7 +75,6 @@ export default class Calendar extends Input {
     private generateQuickYearSelectTable;
     private generateQuickMonthSelectTable;
     handleAction(): void;
-    private formatDate;
     /**
      * @override
      */

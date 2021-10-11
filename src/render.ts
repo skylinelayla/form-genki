@@ -12,6 +12,7 @@ import {createElement} from './utils/dom';
 import { FormSchema } from './types';
 import Form from './items/form';
 import Calendar from './items/calendar';
+import DateRange from './items/date-range';
 
 class Render {
     data: any;
@@ -133,6 +134,9 @@ class Render {
                     break;
                 case 'DATE':
                     item = new Calendar(param);
+                    break;
+                case 'DATE_RANGE':
+                    item = new DateRange(param);
                     break;
                 default: 
                     item = new Input(param);

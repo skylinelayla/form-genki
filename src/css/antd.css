@@ -493,3 +493,39 @@
     transition: all .3s;
     content: '';
 }
+
+/** date-range **/
+.form-genki-date-range-wrapper {
+    width: 100%;
+}
+.form-genki-date-range-wrapper .form-genki-date-range-wrapper-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    list-style: none;
+    outline: none;
+    cursor: text;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-variant: tabular-nums;
+    list-style: none;
+    -webkit-font-feature-settings: 'tnum';
+    font-feature-settings: 'tnum';
+    position: relative;
+    display: inline-block;
+    height: 32px;
+    padding: 4px 11px;
+    color: #bfbfbf;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+.form-genki-date-range-wrapper .form-genki-date-range-wrapper-input .form-genki-date-range-wrapper-icon {
+    float: right;
+}

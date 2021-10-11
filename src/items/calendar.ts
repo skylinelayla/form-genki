@@ -20,7 +20,6 @@ export default class Calendar extends Input {
     constructor(data: FormType) {
         super(data);
         this.prefixClazzName = 'form-genki-calendar-wrapper';
-        console.log('----', this.metaData.defaultValue);
         this.currentTime = this.metaData.defaultValue ? new Date(this.metaData.defaultValue) : new Date();
         this.selectTime = this.formatDate(this.currentTime);
     }
@@ -33,14 +32,6 @@ export default class Calendar extends Input {
      */
     private getMonthDays (month: number, year: number) {
         return new Date(year, month + 1, 0).getDate();
-    }
-
-    /**
-     * get current date info
-     * @returns current date object
-     */
-    private getCurrentDays () {
-        return new Date();
     }
 
     private getMonthInfo(date: string | Date, type: 'prev' | 'next') {
@@ -56,103 +47,6 @@ export default class Calendar extends Input {
     }
 
     /**
-     * generate week list content
-     */
-    private generateWeekList () {
-      return `<thead>
-            <tr class="${this.prefixClazzName}-table-tr">
-                ${CHINA_WEEK_LIST.map(_w => (`<th><div class="${this.prefixClazzName}-table-th-cell">${_w}</div></th>`)).join('')}
-            </tr>
-        </thead>`;
-    }
-
-    /**
-     * generate date title
-     */
-    private generateCalendarHeader() {
-        return `<div class="${this.prefixClazzName}-table-header">
-            <div class="icon year-prev" id="${this.uuid}-year-prev"></div>
-            <div class="icon month-prev" id="${this.uuid}-month-prev"></div>
-            <span>
-                <a class="year-select" id="${this.uuid}-year-quick-select">${this.currentTime.getFullYear()}年</a>
-                <a class="month-select" id="${this.uuid}-month-quick-select">${this.currentTime.getMonth() + 1}月</a>
-            </span>
-            <div class="icon year-next" id="${this.uuid}-year-next"></div>
-            <div class="icon month-next" id="${this.uuid}-month-next"></div>
-        </div>`;
-    }
-
-    private generateQuickCalendarHeader(str: string) {
-        return `<div class="${this.prefixClazzName}-table-header">
-            <div class="icon year-prev" id="${this.uuid}-quick-pick-year-prev"></div>
-            <span id="${this.uuid}-quick-range-slot">
-                ${str}
-            </span>
-            <div class="icon year-next" id="${this.uuid}-quick-pick-year-next"></div>
-        </div>`;
-    }
-
-    private generateQuickCalendarMonthHeader(str: string) {
-        return `<div class="${this.prefixClazzName}-table-header">
-            <div class="icon year-prev" id="${this.uuid}-quick-pick-month-prev"></div>
-            <span id="${this.uuid}-quick-range-slot">
-                ${str}
-            </span>
-            <div class="icon year-next" id="${this.uuid}-quick-pick-month-next"></div>
-        </div>`;
-    }
-
-    private generateBottomActionPanel() {
-        return `<div class="${this.prefixClazzName}-table-footer"><a id="${this.uuid}-reset-today">今天</a></div>`;
-    }
-
-    /**
-     * mock date input
-     */
-    private generateCalendarInput() {
-        return `<div class="${this.prefixClazzName}-input" id="${this.uuid}-input">
-            <span class="${this.prefixClazzName}-value" id="${this.uuid}-display-input">${this.selectTime}</span>
-            <span class="${this.prefixClazzName}-icon">${DateSvg}</span>
-        </div>`;
-    }
-
-    /**
-     * generate current months days
-     */
-    private getDisplayDays() {
-        const currentDays = this.getMonthDays(this.currentTime.getMonth(), this.currentTime.getFullYear());
-        // 7x7 cell, find first/last day of current month week order
-        const firstDay = new Date(this.currentTime.getFullYear(), this.currentTime.getMonth(), 1);
-        const firstDayWeek = firstDay.getDay();
-        // generate 7x7 cell data;
-        const prevMonthDays = firstDayWeek - 1;
-        const prevDays = this.getMonthDays(this.currentTime.getMonth() - 1, this.currentTime.getFullYear());
-        const prevMonthInfo = this.getMonthInfo(this.currentTime, 'prev');
-
-        // get prev month days and get date number
-        const nextDays = this.getMonthDays(this.currentTime.getMonth() + 1, this.currentTime.getFullYear());
-        const nextMonthDays = 42 - prevMonthDays + currentDays;
-        const nextMonthInfo = this.getMonthInfo(this.currentTime, 'next');
-        return [
-            ...this.getMonthSurplusDays(
-                prevDays, prevMonthDays, 'prev', prevMonthInfo.getFullYear(), prevMonthInfo.getMonth() + 1,
-            ),
-            ...this.generateArrayOrder(currentDays, true, this.currentTime.getFullYear(), this.currentTime.getMonth() + 1),
-            ...this.getMonthSurplusDays(
-                nextDays, nextMonthDays, 'next', nextMonthInfo.getFullYear(), nextMonthInfo.getMonth() + 1
-            ),
-        ];
-    }
-
-    private getWeekNumberOfYears(date: Date) {
-        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-        const yearStart = new Date(date.getFullYear(), 0, 1);
-        const weekNumber = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1)/7);
-        return weekNumber;
-    }
-
-    /**
      * get array from 0 to total
      * @param total number of days;
      */
@@ -160,13 +54,14 @@ export default class Calendar extends Input {
         return Array.from({length: total}, (_, i) => ({value: i + 1, isCurrentMonth, date: new Date(`${year}-${month}-${i+1}`)}));
     }
 
+
     /**
      * get surplus days of next or prev month
      * @param total the total of a month
      * @param surplus the number to pick days of a month
      * @param begin last month of next month
      */
-    private getMonthSurplusDays(total: number, surplus: number, begin: 'prev' | 'next', year?: number, month?: number) {
+     private getMonthSurplusDays(total: number, surplus: number, begin: 'prev' | 'next', year?: number, month?: number) {
         const list = this.generateArrayOrder(total, false, year, month);
         if (begin === 'prev') {
             // get last month surplus days
@@ -178,116 +73,240 @@ export default class Calendar extends Input {
     }
 
     /**
+     * generate current months days
+     */
+      private getDisplayDays() {
+        const currentYear = this.currentTime.getFullYear();
+        const currentMonth = this.currentTime.getMonth();
+        const currentDays = this.getMonthDays(currentMonth, currentYear);
+        // 7x7 cell, find first/last day of current month week order
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const firstDayWeek = firstDay.getDay();
+        // generate 7x7 cell data;
+        const prevMonthDays = firstDayWeek - 1;
+        const prevDays = this.getMonthDays(currentMonth - 1, currentYear);
+        const prevMonthInfo = this.getMonthInfo(this.currentTime, 'prev');
+    
+        // get prev month days and get date number
+        const nextDays = this.getMonthDays(currentMonth + 1, currentYear);
+        const nextMonthDays = 42 - prevMonthDays + currentDays;
+        const nextMonthInfo = this.getMonthInfo(this.currentTime, 'next');
+        return [
+            ...this.getMonthSurplusDays(
+                prevDays, prevMonthDays, 'prev', prevMonthInfo.getFullYear(), prevMonthInfo.getMonth() + 1,
+            ),
+            ...this.generateArrayOrder(currentDays, true, currentYear, currentMonth + 1),
+            ...this.getMonthSurplusDays(
+                nextDays, nextMonthDays, 'next', nextMonthInfo.getFullYear(), nextMonthInfo.getMonth() + 1
+            ),
+        ];
+    }
+
+    /**
      * get next month date
      * @param date current time
      * @returns next month date time
      */
-    private getNextMonthDate(date: Date) {
-        const days = date.getDate();
+     private getNextMonthDate(date: Date) {
         let nextYears = date.getFullYear();
-        let nextMonth = date.getMonth() + 1 + 1;
+        let nextMonth = date.getMonth() + 2;
         if (nextMonth === 13) {
             nextYears += 1;
             nextMonth = 1;
         }
-        let nextDay = days;
+        let nextDay = `${date.getDate()}`;
         const nextDays = new Date(nextYears, nextMonth, 0);
         const nextDaysNumber = nextDays.getDate();
-        if (nextDay > nextDaysNumber) {
-            nextDay = nextDaysNumber;
+        if (+nextDay > nextDaysNumber) {
+            nextDay = `${nextDaysNumber}`;
+        }
+        if (+nextDay < 10) {
+            nextDay = `0${nextDay}`;
         }
         return `${nextYears}-${nextMonth}-${nextDay}`;
     }
 
-    private getNextYearDate(date: Date) {
-        return new Date(date.getFullYear() + 1, date.getMonth(), date.getDate());
-    }
-
-    private getPrevYearDate(date: Date) {
-        return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
-    }
-
+    /**
+     * get prev month date
+     * @param date 
+     * @returns prev month date time
+     */
     private getPrevMonthDate(date: Date) {
-        const days = date.getDate();
         let prevYears = date.getFullYear();
         let prevMonth = date.getMonth();
         if (prevMonth === 0) {
             prevYears -= 1;
             prevMonth = 12;
         }
-        let prevDay = days;
+        let prevDay = `${date.getDate()}`;
         const prevDays = new Date(prevYears, prevMonth, 0);
-        if (days > prevDays.getDate()) {
-            prevDay = prevDays.getDate();
+        if (+prevDay > prevDays.getDate()) {
+            prevDay = `${prevDays.getDate()}`;
+        }
+        if (+prevDay < 10) {
+            prevDay = `0${prevDay}`;
         }
         return `${prevYears}-${prevMonth}-${prevDay}`;
     }
 
+    // private getNextYearDate(date: Date) {
+    //     return new Date(date.getFullYear() + 1, date.getMonth(), date.getDate());
+    // }
 
+    // private getPrevYearDate(date: Date) {
+    //     return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+    // }
+
+    /**
+     * get beside year date
+     * @param date date
+     * @param flag params to distinguish next year or prev year
+     * @returns date
+     */
+    private getBesideYearDate(date: Date, flag: 'prev' | 'next') {
+        return new Date(date.getFullYear() + (flag === 'prev' ? -1 : 1), date.getMonth(), date.getDate());
+    }
+
+    private formatDate(dateStr: Date | string) {
+        const date = new Date(dateStr);
+        let day = `${date.getDate()}`;
+        if (+day < 10) {
+            day = `0${day}`;
+        }
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${day}`;
+    }
+
+    /**
+     * generate week list content
+     */
+    private generateWeekList () {
+      return`
+        <thead>
+            <tr class="${this.prefixClazzName}-table-tr">
+                ${CHINA_WEEK_LIST.map(_w => (`<th><div class="${this.prefixClazzName}-table-th-cell">${_w}</div></th>`)).join('')}
+            </tr>
+        </thead>`;
+    }
+
+    /**
+     * generate date title
+     */
+    private generateCalendarHeader() {
+        return `
+            <div class="${this.prefixClazzName}-table-header">
+                <div class="icon year-prev" id="${this.uuid}-year-prev"></div>
+                <div class="icon month-prev" id="${this.uuid}-month-prev"></div>
+                <span>
+                    <a class="year-select" id="${this.uuid}-year-quick-select">${this.currentTime.getFullYear()}年</a>
+                    <a class="month-select" id="${this.uuid}-month-quick-select">${this.currentTime.getMonth() + 1}月</a>
+                </span>
+                <div class="icon year-next" id="${this.uuid}-year-next"></div>
+                <div class="icon month-next" id="${this.uuid}-month-next"></div>
+            </div>`;
+    }
+
+    private generateQuickCalendarHeader(str: string) {
+        return `
+            <div class="${this.prefixClazzName}-table-header">
+                <div class="icon year-prev" id="${this.uuid}-quick-pick-year-prev"></div>
+                <span id="${this.uuid}-quick-range-slot">
+                    ${str}
+                </span>
+                <div class="icon year-next" id="${this.uuid}-quick-pick-year-next"></div>
+            </div>`;
+    }
+
+    private generateQuickCalendarMonthHeader(str: string) {
+        return `
+            <div class="${this.prefixClazzName}-table-header">
+                <div class="icon year-prev" id="${this.uuid}-quick-pick-month-prev"></div>
+                <span id="${this.uuid}-quick-range-slot">
+                    ${str}
+                </span>
+                <div class="icon year-next" id="${this.uuid}-quick-pick-month-next"></div>
+            </div>`;
+    }
+
+    private generateBottomActionPanel() {
+        return `<div class="${this.prefixClazzName}-table-footer"><a id="${this.uuid}-reset-today">今天</a></div>`;
+    }
+
+    /**
+     * mock date input
+     */
+    private generateCalendarInput() {
+        return `
+            <div class="${this.prefixClazzName}-input" id="${this.uuid}-input">
+                <span class="${this.prefixClazzName}-value" id="${this.uuid}-display-input">${this.selectTime}</span>
+                <span class="${this.prefixClazzName}-icon">${DateSvg}</span>
+            </div>`;
+    }
 
     /**
      * get month table
      */
-    private getMonthTable(date?: string) {
+    getMonthTable(date?: string) {
         const daysList = this.getDisplayDays();
         let tableContent = '';
         for(let i = 0; i < 6; i++) {
             let tdContent = '';
             for(let j = 0; j < 7; j++) {
                 const td = daysList[i * 7 + j];
-                tdContent += `<td class="${this.prefixClazzName}-table-td">
-                    <div
-                    class="${this.prefixClazzName}-cell${
-                        td.isCurrentMonth ? ' current-days' : ''}${
+                tdContent += `
+                    <td class="${this.prefixClazzName}-table-td">
+                        <div class="${this.prefixClazzName}-cell${
+                            td.isCurrentMonth ? ' current-days' : ''}${
                             date === this.formatDate(td.date) ? ' selected' : ''}"
-                    data-time="${td.date}"
-                    >
-                        ${td.value}
+                            data-time="${td.date}"
+                        >
+                            ${td.value}
                     </div>
                 </td>`;
             }
             tableContent += `<tr class="${this.prefixClazzName}-table-tr">${tdContent}</tr>`;
         }
-        return `<div class="table-body" id="${this.uuid}-table">
-            <table class="${this.prefixClazzName}-table">${this.generateWeekList()}${tableContent}</table>
-        </div>`;
+        return `
+            <div class="table-body" id="${this.uuid}-table">
+                <table class="${this.prefixClazzName}-table">${this.generateWeekList()}${tableContent}</table>
+            </div>`;
     }
 
     /**
      * panel show input dom
      */
     private getPopInput() {
-        return `<div class="${this.prefixClazzName}-pop-input" id="${this.uuid}-pop-input">
-            <input className="${this.prefixClazzName}-input" id="${this.uuid}-select-input" />
-        </div>`;
+        return `
+            <div class="${this.prefixClazzName}-pop-input" id="${this.uuid}-pop-input">
+                <input className="${this.prefixClazzName}-input" id="${this.uuid}-select-input" />
+            </div>`;
     }
 
     private getPopOverTableContent(date?: string) {
         return `
-        <div class="form-genki-calendar-panel-wrapper" id="${this.uuid}-panel-container">
-            ${this.getPopInput()}
-            <div class="form-genki-calendar-panel" id="${this.uuid}-panel">
-                <div id="${this.uuid}-table-head-slot">
-                    ${this.generateCalendarHeader()}
+            <div class="form-genki-calendar-panel-wrapper" id="${this.uuid}-panel-container">
+                ${this.getPopInput()}
+                <div class="form-genki-calendar-panel" id="${this.uuid}-panel">
+                    <div id="${this.uuid}-table-head-slot">
+                        ${this.generateCalendarHeader()}
+                    </div>
+                    <div id="${this.uuid}-table-slot">
+                        ${this.getMonthTable(date)}
+                    </div>
+                    ${this.generateBottomActionPanel()}
                 </div>
-                <div id="${this.uuid}-table-slot">
-                    ${this.getMonthTable(date)}
-                </div>
-                ${this.generateBottomActionPanel()}
-            </div>
-        </div>
-        `;
+            </div>`;
     }
 
     /**
      * @override
      */
     handleTpl() {
-        return `<div class="${this.prefixClazzName}">
-            <div id="${this.uuid}" name="${this.metaData.name}" class="form-genki-calender ${this.setStyle()}">
-                ${this.generateCalendarInput()}
-            </div>
-        </div>`;
+        return `
+            <div class="${this.prefixClazzName}">
+                <div id="${this.uuid}" name="${this.metaData.name}" class="form-genki-calender ${this.setStyle()}">
+                    ${this.generateCalendarInput()}
+                </div>
+            </div>`;
     }
 
     private generateQuickYearSelectTable(defaultRange?: [number, number]) {
@@ -296,8 +315,7 @@ export default class Calendar extends Input {
         let prefixYear = 0;
         let lastYear = 9;
         if (defaultRange) {
-            prefixYear = defaultRange[0];
-            lastYear = defaultRange[1];
+            [prefixYear, lastYear] = defaultRange;
         } else {
             prefixYear = year - number;
             lastYear = year + (9 - number);
@@ -313,15 +331,15 @@ export default class Calendar extends Input {
             let tableTd = '';
             for (let j = 0; j < 3; j++) {
                 const td = tableDisplayList[i * 3 + j];
-                tableTd += 
-                `<td class="${this.prefixClazzName}-year-quick-td">
-                  <div
-                    class="${this.prefixClazzName}-year-quick-select
-                    ${year === td ? 'active-quick-select-year' : ''}"
-                    data-year="${td}">
-                      ${td}
-                    </div>
-                </td>`;
+                tableTd += `
+                    <td class="${this.prefixClazzName}-year-quick-td">
+                        <div
+                          class="${this.prefixClazzName}-year-quick-select
+                          ${year === td ? 'active-quick-select-year' : ''}"
+                          data-year="${td}">
+                            ${td}
+                        </div>
+                    </td>`;
             }
             tableStr += `<tr>${tableTd}</tr>`
         }
@@ -334,12 +352,10 @@ export default class Calendar extends Input {
     private generateQuickMonthSelectTable() {
         let tableStr = '';
         const month = this.currentTime.getMonth();
-        console.log('===', month);
         for(let i = 0; i < 4; i ++) {
             let tableContent = '';
             for (let j = 0; j < 3; j++) {
                 const td = CHINA_MONTH_LIST[i * 3 + j];
-                console.log(i * 3 + j);
                 tableContent += 
                   `<td class="${this.prefixClazzName}-year-quick-td">
                     <div
@@ -360,6 +376,7 @@ export default class Calendar extends Input {
         const $wrapper = getDOMById(this.uuid);
 
         $wrapper.addEventListener('click', (evt) => {
+            evt.stopPropagation();
             // pay attention after click input then render td panel
             const $panel = getDOMById(`${this.uuid}-panel-container`);
             if ((evt.target as Element).id.includes('quick-select')) {
@@ -462,7 +479,6 @@ export default class Calendar extends Input {
                     $selectInput.value = this.selectTime;
                 } else {
                     const nextDate = this.getNextMonthDate(new Date(this.selectTime));
-                    console.log(nextDate);
                     this.currentTime = new Date(nextDate);
                     this.selectTime = this.formatDate(this.currentTime);
                     $tableSlot.innerHTML = this.getMonthTable(this.selectTime);
@@ -477,8 +493,9 @@ export default class Calendar extends Input {
                     const formattedValue = this.formatDate(value);
                     const $selectInput = getDOMById(`${this.uuid}-select-input`) as HTMLInputElement;
                     $selectInput.value = formattedValue;
-                    $panel.style.display = 'none';
+                    // $panel.style.display = 'none';
                     this.selectTime = formattedValue;
+                    this.currentTime = new Date(value);
                 }
                 if ((evt.target as HTMLElement).dataset.year) {
                     const value = (evt.target as HTMLElement).dataset.year;
@@ -523,17 +540,20 @@ export default class Calendar extends Input {
                 $selectInput.value = this.selectTime;
             }
         });
-    }
 
-    private formatDate(dateStr: Date | string) {
-        const date = new Date(dateStr);
-        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        document.addEventListener('click', (evt) => {
+            // close
+            const $panel = getDOMById(`${this.uuid}-panel-container`);
+            if ($panel) {
+                $panel.remove();
+            }
+        });
     }
 
     /**
      * @override
      */
     getValue() {
-        return '';
+        return this.selectTime;
     }
 }
