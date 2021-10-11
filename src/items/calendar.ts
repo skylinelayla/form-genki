@@ -313,27 +313,47 @@ export default class Calendar extends Input {
             let tableTd = '';
             for (let j = 0; j < 3; j++) {
                 const td = tableDisplayList[i * 3 + j];
-                tableTd += `<td class="">${td}</td>`;
+                tableTd += 
+                `<td class="${this.prefixClazzName}-year-quick-td">
+                  <div
+                    class="${this.prefixClazzName}-year-quick-select
+                    ${year === td ? 'active-quick-select-year' : ''}"
+                    data-year="${td}">
+                      ${td}
+                    </div>
+                </td>`;
             }
-            tableStr += `<tr class="">${tableTd}</tr>`
+            tableStr += `<tr>${tableTd}</tr>`
         }
         return {
-            dom: `<table>${tableStr}</table>`,
+            dom: `<table class="${this.prefixClazzName}-year-quick-table">${tableStr}</table>`,
             range,
         }
     }
 
     private generateQuickMonthSelectTable() {
         let tableStr = '';
+        const month = this.currentTime.getMonth();
+        console.log('===', month);
         for(let i = 0; i < 4; i ++) {
             let tableContent = '';
             for (let j = 0; j < 3; j++) {
                 const td = CHINA_MONTH_LIST[i * 3 + j];
-                tableContent += `<td class="">${td}</td>`;
+                console.log(i * 3 + j);
+                tableContent += 
+                  `<td class="${this.prefixClazzName}-year-quick-td">
+                    <div
+                      class="${this.prefixClazzName}-month-quick-select
+                      ${month === (i * 3 + j) ? 'active-quick-select-year' : ''}"
+                      data-month="${i * 3 + j}"
+                    >
+                    ${td}
+                    </div>
+                </td>`;
             }
             tableStr += `<tr>${tableContent}</tr>`;
         }
-        return `<table>${tableStr}</table>`;
+        return `<table class="${this.prefixClazzName}-year-quick-table">${tableStr}</table>`;
     }
 
     handleAction() {
@@ -452,12 +472,45 @@ export default class Calendar extends Input {
                 return;
             }
             if ((evt.target as Element).parentElement.nodeName === 'TD') {
-                const value = (evt.target as HTMLElement).dataset.time;
-                const formattedValue = this.formatDate(value);
-                const $selectInput = getDOMById(`${this.uuid}-select-input`) as HTMLInputElement;
-                $selectInput.value = formattedValue;
-                $panel.style.display = 'none';
-                this.selectTime = formattedValue;
+                if ((evt.target as HTMLElement).dataset.time) {
+                    const value = (evt.target as HTMLElement).dataset.time;
+                    const formattedValue = this.formatDate(value);
+                    const $selectInput = getDOMById(`${this.uuid}-select-input`) as HTMLInputElement;
+                    $selectInput.value = formattedValue;
+                    $panel.style.display = 'none';
+                    this.selectTime = formattedValue;
+                }
+                if ((evt.target as HTMLElement).dataset.year) {
+                    const value = (evt.target as HTMLElement).dataset.year;
+                    console.log(value);
+                    const selectDate = new Date(+value, this.currentTime.getMonth(), this.currentTime.getDate());
+                    const formattedValue = this.formatDate(selectDate);
+                    const $selectInput = getDOMById(`${this.uuid}-select-input`) as HTMLInputElement;
+                    const $tableSlot = getDOMById(`${this.uuid}-table-slot`);
+                    const $tableHeadSlot = getDOMById(`${this.uuid}-table-head-slot`);
+                    $selectInput.value = formattedValue;
+                    this.selectTime = formattedValue;
+                    this.currentTime = selectDate;
+                    $tableSlot.innerHTML = this.getMonthTable(this.selectTime);
+                    $tableHeadSlot.innerHTML = this.generateCalendarHeader();
+                    return;
+                }
+                if ((evt.target as HTMLElement).dataset.month) {
+                    const value = (evt.target as HTMLElement).dataset.month;
+                    console.log(value);
+                    const selectDate = new Date(this.currentTime.getFullYear(), +value, this.currentTime.getDate());
+                    const formattedValue = this.formatDate(selectDate);
+                    const $selectInput = getDOMById(`${this.uuid}-select-input`) as HTMLInputElement;
+                    const $tableSlot = getDOMById(`${this.uuid}-table-slot`);
+                    const $tableHeadSlot = getDOMById(`${this.uuid}-table-head-slot`);
+                    this.selectTime = formattedValue;
+                    this.currentTime = selectDate;
+                    $selectInput.value = formattedValue;
+                    $tableHeadSlot.innerHTML = this.generateCalendarHeader();
+                    $tableSlot.innerHTML = this.getMonthTable(this.selectTime);
+                    return;
+                }
+             
             }
             if ($panel) {
                 $wrapper.innerHTML = this.generateCalendarInput();
