@@ -12,16 +12,22 @@ const DEFAULT_MONTH_LIST = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Au
 const DEFAULT_WEEK_LIST = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 const CHINA_MONTH_LIST = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 const CHINA_WEEK_LIST = ['一', '二', '三', '四', '五', '六', '日'];
+const PREFIX_CLAZZ_NAME = 'form-genki-calendar-wrapper';
 export default class Calendar extends Input {
     private prefixClazzName: string;
     currentTime: Date;
     selectTime: string;
     yearRange: [number, number];
+
     constructor(data: FormType) {
         super(data);
-        this.prefixClazzName = 'form-genki-calendar-wrapper';
-        this.currentTime = this.metaData.defaultValue ? new Date(this.metaData.defaultValue) : new Date();
+        this.prefixClazzName = PREFIX_CLAZZ_NAME;
+        this.currentTime = this.getDefaultCurrentDate();
         this.selectTime = this.formatDate(this.currentTime);
+    }
+
+    private getDefaultCurrentDate() {
+        return this.metaData.defaultValue ? new Date(this.metaData.defaultValue) : new Date();
     }
 
     /**
@@ -34,6 +40,12 @@ export default class Calendar extends Input {
         return new Date(year, month + 1, 0).getDate();
     }
 
+    /**
+     * get prev or next month date
+     * @param date 
+     * @param type 
+     * @returns date
+     */
     private getMonthInfo(date: string | Date, type: 'prev' | 'next') {
         const factor = type === 'prev' ? -1 : 1;
         const dateObj = new Date(date);
@@ -257,9 +269,8 @@ export default class Calendar extends Input {
                         <div class="${this.prefixClazzName}-cell${
                             td.isCurrentMonth ? ' current-days' : ''}${
                             date === this.formatDate(td.date) ? ' selected' : ''}"
-                            data-time="${td.date}"
-                        >
-                            ${td.value}
+                            data-time="${td.date}">
+                        ${td.value}
                     </div>
                 </td>`;
             }
@@ -541,7 +552,7 @@ export default class Calendar extends Input {
             }
         });
 
-        document.addEventListener('click', (evt) => {
+        document.addEventListener('click', () => {
             // close
             const $panel = getDOMById(`${this.uuid}-panel-container`);
             if ($panel) {
