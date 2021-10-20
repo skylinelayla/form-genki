@@ -10,6 +10,7 @@ export default class Calendar extends Input {
     selectTime: string;
     yearRange: [number, number];
     constructor(data: FormType);
+    private getDefaultCurrentDate;
     /**
      * get month days number;
      * @param month current month
@@ -17,6 +18,12 @@ export default class Calendar extends Input {
      * @returns current months days number
      */
     private getMonthDays;
+    /**
+     * get prev or next month date
+     * @param date
+     * @param type
+     * @returns date
+     */
     private getMonthInfo;
     /**
      * get array from 0 to total
@@ -40,8 +47,19 @@ export default class Calendar extends Input {
      * @returns next month date time
      */
     private getNextMonthDate;
-    private getNextYearDate;
-    private getPrevYearDate;
+    /**
+     * get prev month date
+     * @param date
+     * @returns prev month date time
+     */
+    private getPrevMonthDate;
+    /**
+     * get beside year date
+     * @param date date
+     * @param flag params to distinguish next year or prev year
+     * @returns date
+     */
+    private getBesideYearDate;
     private formatDate;
     /**
      * generate week list content
@@ -58,7 +76,6 @@ export default class Calendar extends Input {
      * mock date input
      */
     private generateCalendarInput;
-    private getPrevMonthDate;
     /**
      * get month table
      */
@@ -74,6 +91,22 @@ export default class Calendar extends Input {
     handleTpl(): string;
     private generateQuickYearSelectTable;
     private generateQuickMonthSelectTable;
+    /** event handler **/
+    /**
+     * handle quick pick panel
+     */
+    handleClickQuickPick(target: Element): void;
+    /**
+     * handle year beside next event
+     */
+    handleClickQuickPanelYearBtn(target: Element): void;
+    /**
+     * handle month beside next event
+     */
+    handleClickQuickPanelMonthBtn(target: Element): void;
+    handleClickTableCell(target: HTMLElement): void;
+    handleClickTableYearCell(target: HTMLElement): void;
+    handleClickTableMonthCell(target: HTMLElement): void;
     handleAction(): void;
     /**
      * @override

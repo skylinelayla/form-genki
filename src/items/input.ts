@@ -24,7 +24,7 @@ export default class Input extends Form<string> {
     /**
      * @override
      */
-    getValue(): any {
+    getValue() {
         let value = 'value';
         if (this.type === 'CHECKBOX') {
             value = 'checked';
